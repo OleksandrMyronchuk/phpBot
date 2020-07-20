@@ -1,0 +1,9 @@
+NOT_PUBLIC_DIR/
+Sheets/token.json
+Sheets/credentials.json
+dbConnect.json
+botToken.txt
+
+inputLog.txt
+log.txt
+
