@@ -17,6 +17,13 @@ class CommandStart2 extends AbstractCommand
     /* обмеження по часу */
     private $minAction = "03:00";
     private $maxAction = "05:31";
+    private $deleteCallback;
+
+    function __construct($receivedMessage, $cmd, $deleteCallback)
+    {
+        $this->deleteCallback = $deleteCallback;
+        parent::__construct($receivedMessage, $cmd);
+    }
 
     function ExecuteCommand()
     {
@@ -28,6 +35,27 @@ class CommandStart2 extends AbstractCommand
             case 0: return $this->Start();
             case 1: return $this->GetPlanForDay();
         }
+    }
+
+    private function PrepareSentMessage($text_id)
+    {
+        global $objSM;
+        $objSM->command = $this->cmd->command;
+        $objSM->step = $this->cmd->step;
+        $objSM->to_user_id = $this->receivedMessage->user_id;
+        $objSM->text_id = text_id;
+    }
+
+    public function SetDeleteCallback($deleteCallback)
+    {
+        $this->deleteCallback = $deleteCallback;
+    }
+
+    private function DeleteStartCommand()
+    {
+        execute;
+        SetDeleteCallback
+        delete from db;
     }
 
     protected function Start()
@@ -46,7 +74,7 @@ class CommandStart2 extends AbstractCommand
         $userObj->InsertUser($this->receivedMessage);/*Check if user not exist then add the user*/
 
         $userDayObj = new UsersDays();
-        $currentDay = $userDayObj->GetCurrentDay($this->receivedMessage->id);/*Get current day without increment */
+        $currentDay = $userDayObj->GetCurrentDay($this->receivedMessage->user_id);/*Get current day without increment */
 
         $this->InsertMessageAI();
 
@@ -59,20 +87,23 @@ class CommandStart2 extends AbstractCommand
             }
         }
 
-        return sprintf($this->objPhraseModule->GetPhraseById(0), $currentDay['_CurrentDay']);//process
+        $response = $currentDay > 1 ? 2 : 0;
+        PrepareSentMessage($response);
+
+        return sprintf($this->objPhraseModule->GetPhraseById($response), $currentDay['_CurrentDay']);//process
     }
 
     private function PrepareDataToSend()
     {
         $GS = new StructGoogleSheets();
-        $GS->userId = $this->receivedMessage->id;
+        $GS->userId = $this->receivedMessage->user_id;
         $GS->userName = $this->receivedMessage->username;
         $GS->firstName = $this->receivedMessage->first_name;
         $GS->lastName = $this->receivedMessage->last_name;
         $GS->telegramTime = date(TIMEFORMAT, ($this->receivedMessage->date + (TIMEOFFSET * 3600)));
         $GS->serverTime = date(TIMEFORMAT, strtotime('+' . TIMEOFFSET . 'hours'));
         $userDayObj = new UsersDays();
-        $GS->day = $userDayObj->GetCurrentDay($this->receivedMessage->id)['_CurrentDay'];
+        $GS->day = $userDayObj->GetCurrentDay($this->receivedMessage->user_id)['_CurrentDay'];
         $GS->context = $this->receivedMessage->text;
         return $GS;
     }
@@ -83,7 +114,7 @@ class CommandStart2 extends AbstractCommand
         $this->InsertMessage();
 
         $userDayObj = new UsersDays();
-        $userDayObj->IncreaseDay($this->receivedMessage->id);
+        $userDayObj->IncreaseDay($this->receivedMessage->user_id);
 
         $GS = $this->PrepareDataToSend();
 
@@ -91,7 +122,11 @@ class CommandStart2 extends AbstractCommand
         $dteObj = new DataToExport();
         $dteObj->InsertMessage($GS);
 
-        return $this->objPhraseModule->GetPhraseById(1);
+        $currentDay = $userDayObj->GetCurrentDay($this->receivedMessage->user_id);/*Get current day without increment */
+        $response = $currentDay > 1 ? 3 : 1;
+        PrepareSentMessage($response);
+
+        return $this->objPhraseModule->GetPhraseById($response);
     }
 
     protected function GetPlanForDay()

@@ -57,8 +57,20 @@ $update = json_decode('{"update_id":682545269, "message":{"message_id":80,"from"
     ',"date":1593877630,"text":"start"}}', JSON_OBJECT_AS_ARRAY);
 */
 
+$objSM = new StructSentMessage();
 
 try {
+
+    function DeleteMessage($chat_id, $message_id)
+    {
+        return SendRequest(
+            'deleteMessage',
+            [
+                'chat_id' => $chat_id,
+                'message_id' => $message_id
+            ]
+        );
+    }
 
     function SendRequest($method, $params = [])
     {
@@ -80,7 +92,7 @@ try {
         $message->first_name = $update['message']['from']['first_name'];
         $message->last_name = $update['message']['from']['last_name'];
         $message->username = $update['message']['from']['username'];
-        $message->id = $update['message']['from']['id'];
+        $message->user_id = $update['message']['from']['id'];
         $message->date = $update['message']['date'];
         $message->text = $update['message']['text'];//'start';
         if($message->text == '') die;
@@ -102,7 +114,11 @@ try {
                 'reply_to_message_id' => $message->message_id
             ]);
         //echo '$answer = ' . $answer;
-        file_get_contents($sendRequestResult);
+        $answer = file_get_contents($sendRequestResult);
+
+        $objSM->message_id = $answer['result']['message_id'];
+        $objSM->chat_id = $answer['result']['chat']['id'];
+        $objSM->date = $answer['result']['date'];
     }
 }
 catch (Exception $e)

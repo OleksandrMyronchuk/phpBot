@@ -10,11 +10,9 @@ require_once ABSPATH . 'Defines.php';
 
 class ProcessCommand
 {
-    private $CommandDictionary =
+    private $commandDictionary =
         [
-            '/start',
             'start',
-            'start/',
             'cancel',
             'time',
             'debug-status',
@@ -41,6 +39,15 @@ class ProcessCommand
 
         $copyReceivedMessage = strtolower($receivedMessage->text);
 
+        if('/' == $copyReceivedMessage[0])
+        {
+            $copyReceivedMessage = substr($copyReceivedMessage, 1);
+        }
+        elseif ('/' == $copyReceivedMessage[strlen($copyReceivedMessage)-1])
+        {
+            $copyReceivedMessage = substr($copyReceivedMessage, 0, -1);
+        }
+
         if(in_array($copyReceivedMessage, $this->CommandDictionary))
         {
             $resultCmd = new StructCommand();
@@ -64,9 +71,7 @@ class ProcessCommand
         switch ($resultCmd->command)
         {
             case 'start':
-            case '/start':
-            case 'start/':
-                $cmd = new CommandStart2($receivedMessage, $resultCmd);//make abstract
+                $cmd = new CommandStart2($receivedMessage, $resultCmd, DeleteMessage);//make abstract
                 return $cmd->ExecuteCommand();
             case 'cancel':
                 $cmd = new CommandCancel($receivedMessage, $resultCmd);//make abstract

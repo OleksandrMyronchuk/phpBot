@@ -7,7 +7,7 @@ class StructReceivedMessage
     public $first_name;
     public $last_name;
     public $username;
-    public $id;
+    public $user_id;
     public $date;
     public $text;
     public $type;
