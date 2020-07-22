@@ -43,7 +43,7 @@ class CommandStart2 extends AbstractCommand
         $objSM->command = $this->cmd->command;
         $objSM->step = $this->cmd->step;
         $objSM->to_user_id = $this->receivedMessage->user_id;
-        $objSM->text_id = text_id;
+        $objSM->text_id = $text_id;
     }
 
     public function SetDeleteCallback($deleteCallback)
@@ -53,9 +53,17 @@ class CommandStart2 extends AbstractCommand
 
     private function DeleteStartCommand()
     {
-        execute;
-        SetDeleteCallback
-        delete from db;
+        $startCMI = GetStartCommandMessageInfo($this->receivedMessage->user_id);
+
+        foreach ($startCMI as $part)
+        {
+            call_user_func_array(
+                $this->deleteCallback,
+                array($part['_chat_id'], $part['_message_id'])
+            );
+        }
+
+        DeleteCommandMessageInfo($this->receivedMessage->user_id);
     }
 
     protected function Start()
@@ -88,7 +96,7 @@ class CommandStart2 extends AbstractCommand
         }
 
         $response = $currentDay > 1 ? 2 : 0;
-        PrepareSentMessage($response);
+        $this->PrepareSentMessage($response);
 
         return sprintf($this->objPhraseModule->GetPhraseById($response), $currentDay['_CurrentDay']);//process
     }
@@ -124,7 +132,7 @@ class CommandStart2 extends AbstractCommand
 
         $currentDay = $userDayObj->GetCurrentDay($this->receivedMessage->user_id);/*Get current day without increment */
         $response = $currentDay > 1 ? 3 : 1;
-        PrepareSentMessage($response);
+        $this->PrepareSentMessage($response);
 
         return $this->objPhraseModule->GetPhraseById($response);
     }

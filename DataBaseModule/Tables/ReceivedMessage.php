@@ -5,7 +5,7 @@ require_once ABSPATH . 'StructureModule/StructCommand.php';
 
 class ReceivedMessage
 {
-    function GetLastMessageByUsername($id)
+    function GetLastMessageByUsername($user_id)
     {
         global $db;
 
@@ -13,7 +13,7 @@ class ReceivedMessage
 
         $pdoStatement = $db->pdo->prepare($CommandText);
 
-        $pdoStatement->bindParam(':_from_id', $id, PDO::PARAM_STR);
+        $pdoStatement->bindParam(':_from_id', $user_id, PDO::PARAM_STR);
 
         $pdoStatement->execute();
 
@@ -51,7 +51,7 @@ class ReceivedMessage
             $receivedMessage->first_name,
             $receivedMessage->last_name,
             $receivedMessage->username,
-            $receivedMessage->id,
+            $receivedMessage->user_id,
             $receivedMessage->date,
             $receivedMessage->text,
             $cmd->command,

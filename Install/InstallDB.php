@@ -14,7 +14,14 @@ class InstallDB extends dbModule
         $this->InstallUsersDays();
         $this->InstallDataToExport();
         $this->InstallPHPAuth();
+        $this->InstallSentMessage();
         $this->Register();
+    }
+
+    private function InstallSentMessage()
+    {
+        $cmd = file_get_contents(ABSPATH . 'Resource/MySQLCommands/CREATE_TABLE_SentMessage.sql');
+        $this->Execute($cmd);
     }
 
     private function InstallPHPAuth()

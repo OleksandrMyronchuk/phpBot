@@ -48,7 +48,7 @@ class ProcessCommand
             $copyReceivedMessage = substr($copyReceivedMessage, 0, -1);
         }
 
-        if(in_array($copyReceivedMessage, $this->CommandDictionary))
+        if(in_array($copyReceivedMessage, $this->commandDictionary))
         {
             $resultCmd = new StructCommand();
             $resultCmd->command = $receivedMessage->text;
@@ -56,7 +56,7 @@ class ProcessCommand
         }
         else
         {
-            $resultCmd = $this->GetCurrentCommand($receivedMessage->id);
+            $resultCmd = $this->GetCurrentCommand($receivedMessage->user_id);
         }
 
         /* Check if command is executing */
@@ -71,7 +71,7 @@ class ProcessCommand
         switch ($resultCmd->command)
         {
             case 'start':
-                $cmd = new CommandStart2($receivedMessage, $resultCmd, DeleteMessage);//make abstract
+                $cmd = new CommandStart2($receivedMessage, $resultCmd, 'DeleteMessage');//make abstract
                 return $cmd->ExecuteCommand();
             case 'cancel':
                 $cmd = new CommandCancel($receivedMessage, $resultCmd);//make abstract
@@ -95,9 +95,9 @@ class ProcessCommand
         }
     }
 
-    function GetCurrentCommand($id)
+    function GetCurrentCommand($user_id)
     {
         $obj = new ReceivedMessage();
-        return $obj->GetLastMessageByUsername($id);
+        return $obj->GetLastMessageByUsername($user_id);
     }
 }

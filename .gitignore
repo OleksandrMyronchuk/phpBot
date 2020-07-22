@@ -5,7 +5,8 @@ dbConnect.json
 dbConnect-real.json
 dbConnect-debug.json
 botToken.txt
-
+botToken-real.txt
+botToken-debug.txt
 inputLog.txt
 log.txt
 
