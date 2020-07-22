@@ -2,6 +2,8 @@ NOT_PUBLIC_DIR/
 Sheets/token.json
 Sheets/credentials.json
 dbConnect.json
+dbConnect-real.json
+dbConnect-debug.json
 botToken.txt
 
 inputLog.txt
