@@ -153,9 +153,8 @@ class CommandStart2 extends AbstractCommand
         if (1 == preg_match($pattern, $subject, $matches)) {
             return $this->Finish();
         } else {
-            global $objSM;
-            $objSM->command = 'start';
-            $objSM->step = '1';
+
+            $this->PrepareSentMessage('Error');
             return $this->objPhraseModule->GetExceptionById(0);
         }
     }
