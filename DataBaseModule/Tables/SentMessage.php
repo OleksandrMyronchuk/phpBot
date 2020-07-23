@@ -7,12 +7,21 @@ class SentMessage
     {
         global $db;
 
-        $CommandText = file_get_contents(ABSPATH . 'Resource/MySQLCommands/DeleteCommandMessageInfo.sql');
+        $CommandText = file_get_contents(ABSPATH . 'Resource/MySQLCommands/DeleteCommandReceivedMessage.sql');
+
+        $pdoStatement = $db->pdo->prepare($CommandText);
+
+        $pdoStatement->bindParam(':_from_id', $userId, PDO::PARAM_STR);
+
+        $pdoStatement->execute();
+
+        global $db;
+
+        $CommandText = file_get_contents(ABSPATH . 'Resource/MySQLCommands/DeleteCommandSentMessage.sql');
 
         $pdoStatement = $db->pdo->prepare($CommandText);
 
         $pdoStatement->bindParam(':_to_user_id', $userId, PDO::PARAM_STR);
-        $pdoStatement->bindParam(':_from_id', $userId, PDO::PARAM_STR);
 
         $pdoStatement->execute();
     }

@@ -57,9 +57,10 @@ $update = json_decode('{"update_id":682545269, "message":{"message_id":80,"from"
     '"id":669168176,"first_name":"Oleksandr","last_name":"Myronchuk","username":"OleksandrMyronchuk","type":"private"}'.
     ',"date":1593877630,"text":"start"}}', JSON_OBJECT_AS_ARRAY);
 */
-
-$update = json_decode('{"update_id":682546384, "message":{"message_id":1155,"from":{"id":669168176,"is_bot":false,"first_name":"Oleksandr","last_name":"Myronchuk","username":"OleksandrMyronchuk","language_code":"en"},"chat":{"id":669168176,"first_name":"Oleksandr","last_name":"Myronchuk","username":"OleksandrMyronchuk","type":"private"},"date":1595457745,"text":"start"}}'
+/*
+$update = json_decode('{"update_id":682546384, "message":{"message_id":1155,"from":{"id":669168176,"is_bot":false,"first_name":"Oleksandr","last_name":"Myronchuk","username":"OleksandrMyronchuk","language_code":"en"},"chat":{"id":669168176,"first_name":"Oleksandr","last_name":"Myronchuk","username":"OleksandrMyronchuk","type":"private"},"date":1595457745,"text":"6:00 ok"}}'
     , JSON_OBJECT_AS_ARRAY);
+*/
 
 $objSM = new StructSentMessage();
 
@@ -84,6 +85,7 @@ try {
         } else {
             $url = base_url . $method;
         }
+
         return $url;
     }
 
@@ -117,8 +119,8 @@ try {
                 'text' => $answer,
                 'reply_to_message_id' => $message->message_id
             ]);
-        echo '$answer = ' . $answer;
-        $answer = file_get_contents($sendRequestResult);
+        //echo '$answer = ' . $answer;
+        $answer = json_decode(file_get_contents($sendRequestResult), JSON_OBJECT_AS_ARRAY);
 
         $objSM->message_id = $answer['result']['message_id'];
         $objSM->chat_id = $answer['result']['chat']['id'];

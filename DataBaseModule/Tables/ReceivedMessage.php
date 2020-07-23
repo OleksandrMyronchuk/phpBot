@@ -43,6 +43,7 @@ class ReceivedMessage
             '_from_id',
             '_date',
             '_text',
+            '_chat_id',
             '_command',
             '_step'
         ];
@@ -54,6 +55,7 @@ class ReceivedMessage
             $receivedMessage->user_id,
             $receivedMessage->date,
             $receivedMessage->text,
+            $receivedMessage->chat_id,
             $cmd->command,
             $cmd->step
         ];

@@ -9,6 +9,7 @@ require_once ABSPATH . 'DataBaseModule/Tables/Users.php';
 require_once ABSPATH . 'DataBaseModule/Tables/UsersDays.php';
 require_once ABSPATH . 'DebugTools/DebugForStartCommand.php';
 require_once ABSPATH . 'DataBaseModule/Tables/DataToExport.php';
+require_once ABSPATH . 'DataBaseModule/Tables/SentMessage.php';
 require_once ABSPATH . 'Defines.php';
 
 class CommandStart2 extends AbstractCommand
@@ -53,17 +54,20 @@ class CommandStart2 extends AbstractCommand
 
     private function DeleteStartCommand()
     {
-        $startCMI = GetStartCommandMessageInfo($this->receivedMessage->user_id);
+        $objSM = new SentMessage();
+
+        $startCMI = $objSM->GetStartCommandMessageInfo($this->receivedMessage->user_id);
 
         foreach ($startCMI as $part)
         {
-            call_user_func_array(
+            $result = call_user_func_array(
                 $this->deleteCallback,
                 array($part['_chat_id'], $part['_message_id'])
             );
+            file_get_contents( $result );
         }
 
-        DeleteCommandMessageInfo($this->receivedMessage->user_id);
+        $objSM->DeleteCommandMessageInfo($this->receivedMessage->user_id);
     }
 
     protected function Start()
@@ -82,7 +86,7 @@ class CommandStart2 extends AbstractCommand
         $userObj->InsertUser($this->receivedMessage);/*Check if user not exist then add the user*/
 
         $userDayObj = new UsersDays();
-        $currentDay = $userDayObj->GetCurrentDay($this->receivedMessage->user_id);/*Get current day without increment */
+        $currentDayArr = $userDayObj->GetCurrentDay($this->receivedMessage->user_id);/*Get current day without increment */
 
         $this->InsertMessageAI();
 
@@ -90,15 +94,16 @@ class CommandStart2 extends AbstractCommand
 
         if(DEBUGMODE == 1 && $allow_duplicate == 0) {
             $limitToNewRequest = 3600 * 19;
-            if ((time() - $currentDay['_DateOfLastUpdate']) < $limitToNewRequest) {
+            if ((time() - $currentDayArr['_DateOfLastUpdate']) < $limitToNewRequest) {
                 return $this->objPhraseModule->GetExceptionById(2) ;
             }
         }
 
-        $response = $currentDay > 1 ? 2 : 0;
+        $currentDay = $currentDayArr['_CurrentDay'];
+        $response = $currentDay == 1 ? 0 : 2;
         $this->PrepareSentMessage($response);
 
-        return sprintf($this->objPhraseModule->GetPhraseById($response), $currentDay['_CurrentDay']);//process
+        return sprintf($this->objPhraseModule->GetPhraseById($response), $currentDayArr['_CurrentDay']);//process
     }
 
     private function PrepareDataToSend()
@@ -130,9 +135,12 @@ class CommandStart2 extends AbstractCommand
         $dteObj = new DataToExport();
         $dteObj->InsertMessage($GS);
 
-        $currentDay = $userDayObj->GetCurrentDay($this->receivedMessage->user_id);/*Get current day without increment */
-        $response = $currentDay > 1 ? 3 : 1;
+        $currentDayArr = $userDayObj->GetCurrentDay($this->receivedMessage->user_id);/*Get current day without increment */
+        $currentDay = $currentDayArr['_CurrentDay'];
+        $response = $currentDay == 1 ? 1 : 3;
         $this->PrepareSentMessage($response);
+
+        $this->DeleteStartCommand();
 
         return $this->objPhraseModule->GetPhraseById($response);
     }
@@ -145,6 +153,9 @@ class CommandStart2 extends AbstractCommand
         if (1 == preg_match($pattern, $subject, $matches)) {
             return $this->Finish();
         } else {
+            global $objSM;
+            $objSM->command = 'start';
+            $objSM->step = '1';
             return $this->objPhraseModule->GetExceptionById(0);
         }
     }
