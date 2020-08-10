@@ -17,7 +17,7 @@
             <li>Set The Bot WebHook</li>
             <li>Set Up The Database</li>
             <li>Checking</li>
-            <li>Create Superuser</li>
+            <li>Create The Superuser</li>
             <li>Install Modules</li>
             <li>Install Standard Modules</li>
             <li>Finish</li>
@@ -34,7 +34,6 @@
         </div>
         <div id="block2">
             <h2>Set The BotToken</h2>
-            <p>Your project already has a botToken: %s</p>
             <label for="botToken">Enter a botToken: </label>
             <input type="text" name="botToken" id="botToken"
                    placeholder="XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXX"><br>
@@ -78,28 +77,52 @@
             <button type="button">Next</button>
         </div>
         <div id="block5">
-            <h1>Checking</h1>
+            <h2>Checking</h2>
             <p id="install-checking-status">Everything is fine.</p>
+            <p id="install-info"></p>
             <p>Click the "Next" button to continue</p>
             <button type="button">Next</button>
         </div>
         <div id="block6">
-            <h1>Welcome to the telegram bot installer.</h1>
+            <h2>Create The Superuser</h2>
+
+            <label for="superuser-login">Enter the login: </label>
+            <input type="text" name="superuser-login" id="superuser-login"
+                   placeholder="Login"><br>
+
+            <label for="superuser-password">Enter the password: </label>
+            <input type="text" name="superuser-password" id="superuser-password"
+                   placeholder="Password"><br>
+
+            <label for="repeat-superuser-password">Repeat the password: </label>
+            <input type="text" name="repeat-superuser-password" id="repeat-superuser-password"
+                   placeholder="Password"><br>
+
+            <p class="bg-danger text-white">
+                Do not lose this account data! It is impossible to restore the account without intervention in the database
+            </p>
+
             <p>Click the "Next" button to continue</p>
             <button type="button">Next</button>
         </div>
         <div id="block7">
-            <h1>Welcome to the telegram bot installer.</h1>
+            <h2>Install Modules</h2>
+            <p>
+            Select all the modules you want to install or select them one by one, then click the "Install" button.
+            Wait for the installation process to complete. When you install all the desired modules,
+            click the "Next" button to continue.
+            </p>
             <p>Click the "Next" button to continue</p>
             <button type="button">Next</button>
         </div>
         <div id="block8">
-            <h1>Welcome to the telegram bot installer.</h1>
+            <h2>Install Standard Modules</h2>
+            <p>List all the standard modules you want to install</p>
             <p>Click the "Next" button to continue</p>
             <button type="button">Next</button>
         </div>
         <div id="block9">
-            <h1>Welcome to the telegram bot installer.</h1>
+            <h2>Welcome to the telegram bot installer.</h2>
             <p>You have successfully installed the telegram bot.</p>
             <p>If some of the parts of the installation were not be configured,
                 you can do that in the admin menu</p>
