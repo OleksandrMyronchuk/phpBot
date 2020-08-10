@@ -1,0 +1,8 @@
+{
+[
+"<h2>Welcome to the telegram bot installer. \nClick "Install" to continue</h2>"
+"<h3>Your project already has a botToken: %s</h3>"
+"Enter a botToken:"
+"Read more about BotToken: https://core.telegram.org/bots#6-botfather"
+]
+}
