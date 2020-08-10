@@ -5,11 +5,11 @@ $allow_incorrect_time = null;
 
 class DebugForStartCommand
 {
-    private $objPhraseModule;
+    private $objCommandPhraseModule;
 
     public function __construct()
     {
-        $this->objPhraseModule = new PhraseModule('CommandDebug');
+        $this->objCommandPhraseModule = new CommandPhraseModule('CommandDebug');
     }
 
     function GetValues()
@@ -55,7 +55,7 @@ class DebugForStartCommand
     {
         global $allow_duplicate;
         global $allow_incorrect_time;
-        return sprintf($this->objPhraseModule->GetPhraseById(0), $allow_incorrect_time, $allow_duplicate);
+        return sprintf($this->objCommandPhraseModule->GetPhraseById(0), $allow_incorrect_time, $allow_duplicate);
     }
 }
 

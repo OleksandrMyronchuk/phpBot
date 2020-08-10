@@ -5,7 +5,7 @@ require_once ABSPATH . 'CommandModule/CommandStart2.php';
 require_once ABSPATH . 'CommandModule/CommandCancel.php';
 require_once ABSPATH . 'DataBaseModule/Tables/ReceivedMessage.php';
 require_once ABSPATH . 'DebugTools/DebugForStartCommand.php';
-require_once ABSPATH . 'Resource/PhraseModule.php';
+require_once ABSPATH . 'Resource/CommandPhraseModule.php';
 require_once ABSPATH . 'Defines.php';
 
 class ProcessCommand
@@ -29,24 +29,31 @@ class ProcessCommand
             'channel'
         ];
 
+    function GetCommand($text)
+    {
+        $text = strtolower($text);
+
+        if('/' == $text[0])
+        {
+            $text = substr($text, 1);
+        }
+        elseif ('/' == $text[strlen($text)-1])
+        {
+            $text = substr($text, 0, -1);
+        }
+
+        return $text;
+    }
+
     function ProcessCurrentCommand($receivedMessage)
     {
         if(!in_array($receivedMessage->type, $this->type)) {
-            return ((new PhraseModule('CommandAll'))->GetExceptionById(0));
+            return ((new CommandPhraseModule('CommandAll'))->GetExceptionById(0));
         }
 
         $resultCmd = '';
 
-        $copyReceivedMessage = strtolower($receivedMessage->text);
-
-        if('/' == $copyReceivedMessage[0])
-        {
-            $copyReceivedMessage = substr($copyReceivedMessage, 1);
-        }
-        elseif ('/' == $copyReceivedMessage[strlen($copyReceivedMessage)-1])
-        {
-            $copyReceivedMessage = substr($copyReceivedMessage, 0, -1);
-        }
+        $copyReceivedMessage = $this->GetCommand($receivedMessage->text);
 
         if(in_array($copyReceivedMessage, $this->commandDictionary))
         {
@@ -66,7 +73,7 @@ class ProcessCommand
             return null;
         }
 
-        $resultCmd->command = strtolower($resultCmd->command);
+        $resultCmd->command = $this->GetCommand($resultCmd->command);
 
         switch ($resultCmd->command)
         {

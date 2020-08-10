@@ -1,7 +1,7 @@
 <?php
 
 require_once ABSPATH . 'DataBaseModule/Tables/ReceivedMessage.php';
-require_once ABSPATH . 'Resource/PhraseModule.php';
+require_once ABSPATH . 'Resource/CommandPhraseModule.php';
 require_once ABSPATH . 'CommandModule/AbstractCommand.php';
 require_once ABSPATH . 'StructureModule/CustomStructure/StructGoogleSheets.php';
 require_once ABSPATH . 'Sheets/GoogleSheetsMain.php';
@@ -14,7 +14,7 @@ require_once ABSPATH . 'Defines.php';
 
 class CommandStart2 extends AbstractCommand
 {
-    private $objPhraseModule;
+    private $objCommandPhraseModule;
     /* обмеження по часу */
     private $minAction = "03:00";
     private $maxAction = "05:31";
@@ -29,7 +29,7 @@ class CommandStart2 extends AbstractCommand
     function ExecuteCommand()
     {
         $this->objReceivedMessage = new ReceivedMessage();
-        $this->objPhraseModule = new PhraseModule('CommandStart');
+        $this->objCommandPhraseModule = new CommandPhraseModule('CommandStart');
 
         switch ($this->cmd->step)
         {
@@ -78,7 +78,7 @@ class CommandStart2 extends AbstractCommand
         $endTime = strtotime($this->maxAction);
         $nowTime = $this->receivedMessage->date;
         if (!($endTime > $nowTime && $nowTime > $beginTime)) {
-            return $this->objPhraseModule->GetExceptionById(1);
+            return $this->objCommandPhraseModule->GetExceptionById(1);
         }
         }
 
@@ -95,7 +95,7 @@ class CommandStart2 extends AbstractCommand
         if(DEBUGMODE == 1 && $allow_duplicate == 0) {
             $limitToNewRequest = 3600 * 19;
             if ((time() - $currentDayArr['_DateOfLastUpdate']) < $limitToNewRequest) {
-                return $this->objPhraseModule->GetExceptionById(2) ;
+                return $this->objCommandPhraseModule->GetExceptionById(2) ;
             }
         }
 
@@ -103,7 +103,7 @@ class CommandStart2 extends AbstractCommand
         $response = $currentDay == 1 ? 0 : 2;
         $this->PrepareSentMessage($response);
 
-        return sprintf($this->objPhraseModule->GetPhraseById($response), $currentDayArr['_CurrentDay']);//process
+        return sprintf($this->objCommandPhraseModule->GetPhraseById($response), $currentDayArr['_CurrentDay']);//process
     }
 
     private function PrepareDataToSend()
@@ -140,9 +140,9 @@ class CommandStart2 extends AbstractCommand
         $response = $currentDay == 1 ? 1 : 3;
         $this->PrepareSentMessage($response);
 
-        $this->DeleteStartCommand();
+        //$this->DeleteStartCommand();
 
-        return $this->objPhraseModule->GetPhraseById($response);
+        return $this->objCommandPhraseModule->GetPhraseById($response);
     }
 
     protected function GetPlanForDay()
@@ -155,7 +155,7 @@ class CommandStart2 extends AbstractCommand
         } else {
 
             $this->PrepareSentMessage('Error');
-            return $this->objPhraseModule->GetExceptionById(0);
+            return $this->objCommandPhraseModule->GetExceptionById(0);
         }
     }
 }
