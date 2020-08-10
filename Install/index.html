@@ -5,7 +5,109 @@
     <title>Installation Wizard - Telegram Bot</title>
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
 </head>
-<body>
+<body class="container">
 
+<div class="row">
+    <div class="col-sm-4">
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <ul>
+            <li>Welcome</li>
+            <li>Set The BotToken</li>
+            <li>Set The Bot WebHook</li>
+            <li>Set Up The Database</li>
+            <li>Checking</li>
+            <li>Create Superuser</li>
+            <li>Install Modules</li>
+            <li>Install Standard Modules</li>
+            <li>Finish</li>
+        </ul>
+    </nav>
+    </div>
+    <div class="col">
+    <!-- Page Content -->
+    <div id="content">
+        <div id="block1">
+            <h1>Welcome to the telegram bot installer.</h1>
+            <p>Click the "Install" button to continue</p>
+            <button type="button">Install</button>
+        </div>
+        <div id="block2">
+            <h2>Set The BotToken</h2>
+            <p>Your project already has a botToken: %s</p>
+            <label for="botToken">Enter a botToken: </label>
+            <input type="text" name="botToken" id="botToken"
+                   placeholder="XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXX"><br>
+            <p>Read more about BotToken: https://core.telegram.org/bots#6-botfather</p>
+            <p>Click the "Next" button to continue</p>
+            <button type="button">Next</button>
+        </div>
+        <div id="block3">
+            <h2>Set The WebHook</h2>
+            <p>Installation status: <span id="webhook-status"></span></p>
+            <p class="bg-danger text-white">
+                Your web-site MUST HAVE SSL protection, otherwise the telegram bot will not work.
+            </p>
+            <p>Click the "Next" button to continue</p>
+            <button type="button">Next</button>
+        </div>
+        <div id="block4">
+            <h2>Set Up The Database</h2>
+
+            <label for="host">Enter the host: </label>
+            <input type="text" name="host" id="host"
+                   placeholder="host"><br>
+
+            <label for="username">Enter the username: </label>
+            <input type="text" name="username" id="username"
+                   placeholder="username"><br>
+
+            <label for="password">Enter the password: </label>
+            <input type="text" name="password" id="password"
+                   placeholder="password"><br>
+
+            <label for="host">Enter the database name: </label>
+            <input type="text" name="dbname" id="dbname"
+                   placeholder="database-name"><br>
+
+            <label for="host">Enter the charset: </label>
+            <input type="text" name="charset" id="charset" value="utf8mb4"
+                   placeholder="charset"><br>
+
+            <p>Click the "Next" button to continue</p>
+            <button type="button">Next</button>
+        </div>
+        <div id="block5">
+            <h1>Checking</h1>
+            <p id="install-checking-status">Everything is fine.</p>
+            <p>Click the "Next" button to continue</p>
+            <button type="button">Next</button>
+        </div>
+        <div id="block6">
+            <h1>Welcome to the telegram bot installer.</h1>
+            <p>Click the "Next" button to continue</p>
+            <button type="button">Next</button>
+        </div>
+        <div id="block7">
+            <h1>Welcome to the telegram bot installer.</h1>
+            <p>Click the "Next" button to continue</p>
+            <button type="button">Next</button>
+        </div>
+        <div id="block8">
+            <h1>Welcome to the telegram bot installer.</h1>
+            <p>Click the "Next" button to continue</p>
+            <button type="button">Next</button>
+        </div>
+        <div id="block9">
+            <h1>Welcome to the telegram bot installer.</h1>
+            <p>You have successfully installed the telegram bot.</p>
+            <p>If some of the parts of the installation were not be configured,
+                you can do that in the admin menu</p>
+            <p>Click the "Finish" button to continue</p>
+            <button type="button">Finish</button>
+        </div>
+    </div>
+    </div>
+</div>
 </body>
 </html>

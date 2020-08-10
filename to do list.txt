@@ -13,5 +13,18 @@
 Перевірка
 Встановлення логіна і пароля супер користувача + попередження
 Встановлення модулів
-Завершення
 Встановити стандартні плагіни (гугл шел)
+Завершення
+
+Welcome
+Set The BotToken
+Set The Bot WebHook
+Set Up The Database
+Checking -
+https://api.telegram.org/bot1341094850:AAGrXFJhgw4P9HtcmAMEjc8tQwIQPIj--Io/getMe - BotToken
+https://api.telegram.org/bot1341094850:AAGrXFJhgw4P9HtcmAMEjc8tQwIQPIj--Io/getWebhookInfo - WebHook
+DB
+Create Superuser
+Install Modules
+Install Standard Modules
+Finish
