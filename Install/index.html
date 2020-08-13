@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Installation Wizard - Telegram Bot</title>
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="container">
 
@@ -30,16 +31,16 @@
         <div id="block1">
             <h1>Welcome to the telegram bot installer.</h1>
             <p>Click the "Install" button to continue</p>
-            <button type="button">Install</button>
+            <button type="button" onclick="NextBlock(2);">Install</button>
         </div>
         <div id="block2">
             <h2>Set The BotToken</h2>
             <label for="botToken">Enter a botToken: </label>
             <input type="text" name="botToken" id="botToken"
                    placeholder="XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXX"><br>
-            <p>Read more about BotToken: https://core.telegram.org/bots#6-botfather</p>
+            <p>Read more about <a target="_blank" href="https://core.telegram.org/bots#6-botfather">BotToken</a></p>
             <p>Click the "Next" button to continue</p>
-            <button type="button">Next</button>
+            <button type="button" onclick="NextBlock(3);">Next</button>
         </div>
         <div id="block3">
             <h2>Set The WebHook</h2>
@@ -48,7 +49,7 @@
                 Your web-site MUST HAVE SSL protection, otherwise the telegram bot will not work.
             </p>
             <p>Click the "Next" button to continue</p>
-            <button type="button">Next</button>
+            <button type="button" onclick="NextBlock(4);">Next</button>
         </div>
         <div id="block4">
             <h2>Set Up The Database</h2>
@@ -74,14 +75,14 @@
                    placeholder="charset"><br>
 
             <p>Click the "Next" button to continue</p>
-            <button type="button">Next</button>
+            <button type="button" onclick="NextBlock(5);">Next</button>
         </div>
         <div id="block5">
             <h2>Checking</h2>
             <p id="install-checking-status">Everything is fine.</p>
             <p id="install-info"></p>
             <p>Click the "Next" button to continue</p>
-            <button type="button">Next</button>
+            <button type="button" onclick="NextBlock(6);">Next</button>
         </div>
         <div id="block6">
             <h2>Create The Superuser</h2>
@@ -103,7 +104,7 @@
             </p>
 
             <p>Click the "Next" button to continue</p>
-            <button type="button">Next</button>
+            <button type="button" onclick="NextBlock(7);">Next</button>
         </div>
         <div id="block7">
             <h2>Install Modules</h2>
@@ -113,13 +114,13 @@
             click the "Next" button to continue.
             </p>
             <p>Click the "Next" button to continue</p>
-            <button type="button">Next</button>
+            <button type="button" onclick="NextBlock(8);">Next</button>
         </div>
         <div id="block8">
             <h2>Install Standard Modules</h2>
             <p>List all the standard modules you want to install</p>
             <p>Click the "Next" button to continue</p>
-            <button type="button">Next</button>
+            <button type="button" onclick="NextBlock(9);">Next</button>
         </div>
         <div id="block9">
             <h2>Welcome to the telegram bot installer.</h2>
@@ -127,10 +128,11 @@
             <p>If some of the parts of the installation were not be configured,
                 you can do that in the admin menu</p>
             <p>Click the "Finish" button to continue</p>
-            <button type="button">Finish</button>
+            <button type="button" onclick="NextBlock(-1);">Finish</button>
         </div>
     </div>
     </div>
 </div>
+<script type="text/javascript" src="assets/js/Install.js"></script>
 </body>
 </html>
