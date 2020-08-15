@@ -29,3 +29,5 @@ Create Superuser
 Install Modules
 Install Standard Modules
 Finish
+
+Розібратися з створенням сертифікату

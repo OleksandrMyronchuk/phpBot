@@ -107,6 +107,7 @@ function WebHookInstallation(botTokenValue)
 function Checking()
 {
 
+// return status: true/false, desc: sucka
 }
 
 function Block1() {
