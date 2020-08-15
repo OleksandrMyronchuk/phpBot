@@ -16,21 +16,15 @@ class TelegramTools
     {
         $methodName = 'getWebhookInfo';
         $url = sprintf($this->telegramInfoPath, $this->botToken, $methodName);
-        $result = json_decode(file_get_contents($url), JSON_OBJECT_AS_ARRAY);
-        if($result['ok'] == 'true')
-        {
-            print_r($result['result']);
-        }
+        $result = str_replace('ok', 'status', file_get_contents($url));
+        return $result;
     }
 
     public function GetMe()
     {
         $methodName = 'getMe';
         $url = sprintf($this->telegramInfoPath, $this->botToken, $methodName);
-        $result = json_decode(file_get_contents($url), JSON_OBJECT_AS_ARRAY);
-        if($result['ok'] == 'true')
-        {
-            print_r($result['result']);
-        }
+        $result = str_replace('ok', 'status', file_get_contents($url));
+        return $result;
     }
 }

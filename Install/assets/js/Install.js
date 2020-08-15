@@ -20,13 +20,13 @@ function SetContentValues() {
         var host = document.getElementById('host');
         host.value = content.databaseConnection.host === undefined ? '' : content.databaseConnection.host;
         var username = document.getElementById('username');
-        username.value = content.databaseConnection.username === undefined ? '' : content.botToken;
+        username.value = content.databaseConnection.username === undefined ? '' : content.databaseConnection.username;
         var password = document.getElementById('password');
-        password.value = content.databaseConnection.password === undefined ? '' : content.botToken;
+        password.value = content.databaseConnection.password === undefined ? '' : content.databaseConnection.password;
         var dbname = document.getElementById('dbname');
-        dbname.value = content.databaseConnection.dbname === undefined ? '' : content.botToken;
+        dbname.value = content.databaseConnection.dbname === undefined ? '' : content.databaseConnection.dbname;
         var charset = document.getElementById('charset');
-        charset.value = content.databaseConnection.charset === undefined ? '' : content.botToken;
+        charset.value = content.databaseConnection.charset === undefined ? '' : content.databaseConnection.charset;
     }
 }
 
@@ -71,7 +71,7 @@ function SaveContent() {
     var url = "ContentManager.php";
     var params = "functionName=SaveContent&data=" + JSON.stringify(content);
     MakePOSTRequest(url, params);
-    callbackForMPR = function(val) {console.log(val);}
+    callbackForMPR = function(val) {}
 }
 
 function OpenNewBlock(num) {
@@ -106,8 +106,14 @@ function WebHookInstallation(botTokenValue)
 
 function Checking()
 {
-
-// return status: true/false, desc: sucka
+    var url = "Checking.php";
+    MakePOSTRequest(url, '');
+    callbackForMPR = function(val)
+    {
+        console.log(val);
+        /*document.getElementById("webhook-status").innerText =
+            val;*/
+    }
 }
 
 function Block1() {

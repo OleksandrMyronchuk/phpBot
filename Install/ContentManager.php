@@ -39,7 +39,6 @@ class ContentManager
         $data = json_decode($data, true);
         file_put_contents($this->pathToBotToken, $data['botToken']);
         file_put_contents($this->pathToDBConnect, json_encode($data['databaseConnection']));
-        echo 'ok6';
     }
 }
 

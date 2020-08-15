@@ -34,6 +34,11 @@ class DBModule
         $this->pdo = new PDO($this->dsn, $this->username, $this->password, $this->opt);
     }
 
+    function Query($cmd)
+    {
+        return $this->pdo->query($cmd);
+    }
+
     function Execute($cmd)
     {
         return $this->pdo->exec($cmd);
