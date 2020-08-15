@@ -74,5 +74,3 @@ class DBModule
         $pdoStatement->execute();
     }
 }
-
-?>

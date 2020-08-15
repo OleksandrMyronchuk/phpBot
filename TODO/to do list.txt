@@ -21,7 +21,8 @@ Set The BotToken - якщо вже є вставити його
 Set The Bot WebHook
 Set Up The Database - якщо вже є вставити його
 Checking -
-https://api.telegram.org/bot1341094850:AAGrXFJhgw4P9HtcmAMEjc8tQwIQPIj--Io/getMe - BotToken
+SELECT version() - data base tools
+https://api.telegram.org/bot1341094850:AAGrXFJhgw4P9HtcmAMEjc8tQwIQPIj--Io/getMe - BotToken telegrm tools
 https://api.telegram.org/bot1341094850:AAGrXFJhgw4P9HtcmAMEjc8tQwIQPIj--Io/getWebhookInfo - WebHook
 DB
 Create Superuser
