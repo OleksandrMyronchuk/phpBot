@@ -8,12 +8,12 @@ class DBTools
         $db = new DBModule();
         $db->ConnectToDB();
         try {
-            $result = $db->Execute('SELECT version() AS version');
-            return json_encode( array( 'status' => 'true', 'result' => $result['version'] ) );
+            $result = $db->Query('SELECT version() AS version');
+            return array( 'status' => 'true', 'result' => $result[0]['version'] );
         }
         catch (Exception $e)
         {
-            return json_encode( array( 'status' => 'false', 'result' => ('Error: ' . $e->getMessage()) ) );
+            return array( 'status' => 'false', 'result' => ('Error: ' . $e->getMessage()) );
         }
     }
 }

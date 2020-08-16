@@ -1,6 +1,9 @@
 <?php
 define( 'ABSPATH', __DIR__ . '/../' );
 
+require_once ABSPATH . 'Install/MainInstall.php';
+require_once ABSPATH . 'Install/CreateSuperuser.php';
+
 class ContentManager
 {
     public $pathToBotToken;
@@ -12,7 +15,7 @@ class ContentManager
         $this->pathToDBConnect = ABSPATH . 'dbConnect.json';
     }
 
-    function GetContent()
+    public function GetContent()
     {
         $botToken = $dbConnect = null;
 
@@ -34,11 +37,22 @@ class ContentManager
         return json_encode($result);
     }
 
-    function SaveContent($data)
+    public function SaveContent($data)
     {
         $data = json_decode($data, true);
         file_put_contents($this->pathToBotToken, $data['botToken']);
         file_put_contents($this->pathToDBConnect, json_encode($data['databaseConnection']));
+    }
+
+    public function InstallTables()
+    {
+        new MainInstall();
+    }
+
+    public function CreateSuperuser($email, $password)
+    {
+        $obj = new CreateSuperuser();
+        return $obj->Register($email, $password);
     }
 }
 
@@ -54,7 +68,16 @@ if(!empty($_POST['functionName']))
     {
         $data = $_POST['data'];
         if(!empty($data)) {
-            echo $obj->SaveContent($data);
+            $result = $obj->SaveContent($data);
+            $obj->InstallTables();
+            echo $result;
         }
+    }
+    elseif($functionName == 'CreateSuperuser')
+    {
+        $email = $_POST['email'];
+        /* ТУТ можна зробити краший захист. Public-key cryptography */
+        $password = $_POST['password'];
+        echo json_encode( $obj->CreateSuperuser($email, $password) );
     }
 }

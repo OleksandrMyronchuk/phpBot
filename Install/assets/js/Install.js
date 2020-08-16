@@ -52,7 +52,7 @@ function MakePOSTRequest(url, params) {
     {
         content = JSON.parse(val);
         SetContentValues();
-    }
+    };
 })();
 
 function SaveContent() {
@@ -71,7 +71,7 @@ function SaveContent() {
     var url = "ContentManager.php";
     var params = "functionName=SaveContent&data=" + JSON.stringify(content);
     MakePOSTRequest(url, params);
-    callbackForMPR = function(val) {}
+    callbackForMPR = function(val) {};
 }
 
 function OpenNewBlock(num) {
@@ -101,7 +101,7 @@ function WebHookInstallation(botTokenValue)
     {
         document.getElementById("webhook-status").innerText =
             val;
-    }
+    };
 }
 
 function Checking()
@@ -110,10 +110,36 @@ function Checking()
     MakePOSTRequest(url, '');
     callbackForMPR = function(val)
     {
-        console.log(val);
-        /*document.getElementById("webhook-status").innerText =
-            val;*/
-    }
+        if(val == '') return;
+        val = JSON.parse(val);
+        document.getElementById("install-checking-status").innerText =
+            val.status ? "Everything is fine" : "Something is wrong";
+        document.getElementById("install-info").innerHTML =
+            val.description;
+    };
+}
+
+function CreateSuperuser(loginValue, passwordValue)
+{
+    var url = "ContentManager.php";
+    var params =
+        "functionName=CreateSuperuser&email=" +
+        loginValue +
+        "&password=" +
+        passwordValue;
+
+    MakePOSTRequest(url, params);
+    callbackForMPR = function(val) {
+        if(val == '') return;
+        val = JSON.parse(val);
+        if(val.error) {
+            alert(val.message);
+            document.getElementById('buttonBlock7').style.display = 'block';
+        }
+        else{
+            OpenNewBlock(7);
+        }
+    };
 }
 
 function Block1() {
@@ -164,11 +190,31 @@ function Block4() {
 }
 
 function Block5() {
-
+    return true;
 }
 
 function Block6() {
+    var loginValue = document.getElementById('superuser-login').value;
+    var passwordValue = document.getElementById('superuser-password').value;
+    var repeat_passwordValue = document.getElementById('repeat-superuser-password').value;
 
+    if(passwordValue != repeat_passwordValue)
+    {
+        alert("Error");
+        return false;
+    }
+
+    if(loginValue == '' || passwordValue == '')
+    {
+        alert("Error");
+        return false;
+    }
+
+    document.getElementById('buttonBlock7').style.display = 'none';
+
+    CreateSuperuser(loginValue, passwordValue);
+
+    return false;
 }
 
 function Block7() {

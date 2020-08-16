@@ -36,7 +36,9 @@ class DBModule
 
     function Query($cmd)
     {
-        return $this->pdo->query($cmd);
+        $sth = $this->pdo->prepare($cmd);
+        $sth->execute();
+        return $sth->fetchAll();
     }
 
     function Execute($cmd)

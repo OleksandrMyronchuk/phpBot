@@ -17,7 +17,7 @@ class TelegramTools
         $methodName = 'getWebhookInfo';
         $url = sprintf($this->telegramInfoPath, $this->botToken, $methodName);
         $result = str_replace('ok', 'status', file_get_contents($url));
-        return $result;
+        return json_decode($result, true);
     }
 
     public function GetMe()
@@ -25,6 +25,6 @@ class TelegramTools
         $methodName = 'getMe';
         $url = sprintf($this->telegramInfoPath, $this->botToken, $methodName);
         $result = str_replace('ok', 'status', file_get_contents($url));
-        return $result;
+        return json_decode($result, true);
     }
 }
