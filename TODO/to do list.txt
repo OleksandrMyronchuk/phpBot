@@ -6,28 +6,111 @@
 
 ***
 
-Вітання
-Встановлення токена для бота
-Встановлення хука
-Встановлення бази даних
-Перевірка
-Встановлення логіна і пароля супер користувача + попередження
++Вітання
++Встановлення токена для бота
++Встановлення хука
++Встановлення бази даних
++Перевірка
++Встановлення логіна і пароля супер користувача + попередження
 Встановлення модулів
 Встановити стандартні плагіни (гугл шел)
 Завершення
 
-Welcome
-Set The BotToken - якщо вже є вставити його
-Set The Bot WebHook
-Set Up The Database - якщо вже є вставити його
-Checking -
-SELECT version() - data base tools
-https://api.telegram.org/bot1341094850:AAGrXFJhgw4P9HtcmAMEjc8tQwIQPIj--Io/getMe - BotToken telegrm tools
-https://api.telegram.org/bot1341094850:AAGrXFJhgw4P9HtcmAMEjc8tQwIQPIj--Io/getWebhookInfo - WebHook
-DB
-Create Superuser
++Welcome
++Set The BotToken - якщо вже є вставити його
++Set The Bot WebHook
++Set Up The Database - якщо вже є вставити його
++Checking -
++SELECT version() - data base tools
++https://api.telegram.org/bot1341094850:AAGrXFJhgw4P9HtcmAMEjc8tQwIQPIj--Io/getMe - BotToken telegrm tools
++https://api.telegram.org/bot1341094850:AAGrXFJhgw4P9HtcmAMEjc8tQwIQPIj--Io/getWebhookInfo - WebHook
++DB
++Create Superuser
 Install Modules
 Install Standard Modules
 Finish
 
 Розібратися з створенням сертифікату
+
+зробити компресора
+
+Версія
+
+назва команди
+інсталяція команди — якщо немає файлу instilled
+таблиці
+структури
+основна логіка
+
+Команда реєструється. Якщо команду викликають, то запускається плагін
+
+
+автоматичне збереження структури
+$id = save(‘name’, $data)
+
+get(‘name’) - get last
+
+get(‘name’, id) – get by id
+
+delete
+
+update
+
+
+
+основна логіка
+
+слухач (колбек) якщо колбек повертає тру, перейти на наступний крок і надати повідомлення, якщо фалс то повідомлення помилки
+
+
+НАПРИКЛАД
+CommandStart
+Tables
+Structures
+Installer – index.php
+Logic
+index – listen(Callback);
+**
+command 1
+command 2
+command n
+
+AdminPanel
+** Add to panel
+MainName
+SubName
+** Page is empty
+export to google sheets / drive or excel
+get users
+get settings
+
+
+
+??chat
+ID
+
+
+*** BotAdminPanel ***
+Створюється окрема директорія
+hook
+Якщо реєструється хоча б одне меню, пишеться назва поагіна
+1) MenuName - меню відкриває сторінку
+2) SubMenuName - субменю може існувати тільки з меню, відкриває сторінку
+додати меню управління плагінами
+
+*** Command Module ***
+Створюється окрема директорія
+Має бути JSON з навзами команд, які потрібно зареєструвати і викликами конструкорів класів
+* Створити РНР файл "команди" і додавати туди як текст
+Викликається $receivedMessage, $resultCmd імя_команди
+
+*** dbm->Tables
+Створюється окрема директорія
+
+*** ресурси
+Створюється окрема директорія
+Додаємо префікс до таблиць (якщо превікс не співпадає, показати помилку встановлювача)
+
+*** структури
+Створюється окрема директорія
+
