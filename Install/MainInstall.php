@@ -1,5 +1,5 @@
 <?php
-require_once ABSPATH . 'Install/InstallDB.php';
+require_once ABSPATH . 'Install/InstallTables.php';
 
 class MainInstall
 {
@@ -18,7 +18,7 @@ class MainInstall
 
     function Install()
     {
-        $obj = new InstallDB();
+        $obj = new InstallTables();
         $obj->Install();
     }
 }

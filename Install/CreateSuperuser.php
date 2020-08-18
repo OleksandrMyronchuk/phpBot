@@ -1,5 +1,5 @@
 <?php
-require_once ABSPATH . 'Install/InstallDB.php';
+require_once ABSPATH . 'Install/InstallTables.php';
 require_once ABSPATH . 'BotAdminPanel/PHPAuth/Auth.php';
 require_once ABSPATH . 'BotAdminPanel/PHPAuth/Config.php';
 

@@ -1,12 +1,11 @@
 <?php
 require_once ABSPATH . 'DataBaseModule/dbModule.php';
 
-class InstallDB extends dbModule
+class InstallTables extends dbModule
 {
-    public function __construct()
+    public function __construct($pdo)
     {
-        parent::__construct();
-        $this->ConnectToDB();
+        $this->pdo = $pdo;
     }
 
     function Install()
@@ -16,19 +15,12 @@ class InstallDB extends dbModule
         $this->InstallUsers();
         $this->InstallUsersDays();
         $this->InstallDataToExport();
-        $this->InstallPHPAuth();
         $this->InstallSentMessage();
     }
 
     private function InstallSentMessage()
     {
         $cmd = file_get_contents(ABSPATH . 'Resource/MySQLCommands/CREATE_TABLE_SentMessage.sql');
-        $this->Execute($cmd);
-    }
-
-    private function InstallPHPAuth()
-    {
-        $cmd = file_get_contents(ABSPATH . 'BotAdminPanel/PHPAuth/database_defs/database_mysql.sql');
         $this->Execute($cmd);
     }
 

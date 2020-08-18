@@ -89,11 +89,14 @@ get settings
 ??chat
 ID
 
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * Magic5AM * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+ДОБАВИТИ ФАЙЛ СТВОРЕННЯ ТАБЛИЦЬ
 
 *** BotAdminPanel ***
 Створюється окрема директорія
 
-запрошення!!! 1:30 вислати
+satana took it
 
 створити з назвами MenuName і SubMenuName
 {MenuName/SubMenuName{fileName: "#", name, path null}}

@@ -65,10 +65,10 @@ class DBModule
         $allFieldValues = ' ( :' . join(', :', $fieldNames) . ' ) ';
 
         $CommandText =
-            "INSERT INTO " .
+            'INSERT INTO ' .
             $tableName .
             $allFieldNames .
-            " VALUES " .
+            ' VALUES ' .
             $allFieldValues;
 
         $pdoStatement = $this->pdo->prepare($CommandText);
