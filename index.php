@@ -2,8 +2,6 @@
 
 define( 'ABSPATH', __DIR__ . '/' );
 
-new MainInstall();
-
 /* install DB */
 /*
 require_once ABSPATH . 'Install/MainInstall.php';
