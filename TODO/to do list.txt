@@ -91,12 +91,18 @@ ID
 
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * Magic5AM * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+файл опис
+тип command / addition
+назва
+версія
+опис
+
 ДОБАВИТИ ФАЙЛ СТВОРЕННЯ ТАБЛИЦЬ
 
 *** BotAdminPanel ***
 Створюється окрема директорія
 
-satana took it
+satan took it
 
 створити з назвами MenuName і SubMenuName
 {MenuName/SubMenuName{fileName: "#", name, path null}}
