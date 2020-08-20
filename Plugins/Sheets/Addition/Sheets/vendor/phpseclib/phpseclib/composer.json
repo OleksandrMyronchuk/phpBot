@@ -67,7 +67,7 @@
     },
     "autoload": {
         "files": [
-            "phpseclib/bootstrap.php"
+          "phpseclib/bootstrap.php"
         ],
         "psr-4": {
             "phpseclib\\": "phpseclib/"

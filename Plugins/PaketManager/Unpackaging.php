@@ -13,11 +13,14 @@ class Unpackaging
 {
     private $pathToPackage;
     private $typeOfPackage;
+    private $packageName;
 
     public function __construct($packageName)
     {
         $this->pathToPackage = getcwd() . '/' . $packageName;
-         /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/$this->f(); return;
+        $this->packageName = $packageName;
+
+         /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/$this->DoUnpackaging(); return;
         echo $this->pathToPackage;
         $zip = new ZipArchive;
         if ($zip->open($this->pathToPackage . '.zip') === TRUE) {
@@ -25,7 +28,7 @@ class Unpackaging
             $zip->extractTo($this->pathToPackage);
             $zip->close();
             echo 'ok';
-            $this->f();
+            $this->DoUnpackaging();
         } else {
             echo 'failed';
         }
@@ -51,6 +54,50 @@ class Unpackaging
             die('Error! Unknown package type');
         }
     }
+
+    public function MakeMenu()
+    {
+        $pathToMenu = $this->pathToPackage . '/BotAdminPanel/Magic5AM/Menu.json';
+        if(!file_exists($pathToMenu)) return;
+        $menuContent = file_get_contents($pathToMenu);
+        $menuContent = json_decode($menuContent, true);
+        $tempMenu = file_get_contents(ABSPATH . 'Plugins/PaketManager/TemplatePartOfMenu.html');
+        $tempSubmenu = file_get_contents(ABSPATH . 'Plugins/PaketManager/TemplatePartOfSubMenu.html');
+
+        $menuResult = '';
+
+        foreach ($menuContent['Menu'] as $menu)
+        {
+            $menuResult .= str_replace('[MENUNAME]', $menu['name'], $tempMenu) . PHP_EOL;
+
+            $subMenuResult = '';
+            foreach ($menuContent['SubMenu'] as $subMenu)
+            {
+                $subMenuResult .=
+                    str_replace('[FILENAME]', ($subMenu['path'] == null ? $subMenu['fileName'] : $subMenu['path']),
+                        str_replace('[MENUNAME]', $menu['name'],
+                        str_replace('[SUBMENUNAME]', $subMenu['name'], $tempSubmenu)))
+                    . PHP_EOL;
+            }
+
+            $menuResult = str_replace('[CONTENT]', $subMenuResult, $menuResult);
+        }
+
+        file_put_contents(
+            ABSPATH . 'BotAdminPanel/' .  $this->packageName . '/Menu.php',
+            $menuResult);
+    }
+
+    public function MakeCommand()
+    {
+        $pathToCommand = $this->pathToPackage . 'CommandModule/Magic5AM/ListOfCommands.json';
+    }
+
+    public function MakeDeleteFile()
+    {
+
+    }
+
     /*
             if()
                 if()
@@ -96,9 +143,13 @@ class Unpackaging
         copy($a['pluginPath'], $a['phpBotPath']);
     }
 
-    public function f()
+    public function DoUnpackaging()
     {
-        $this->AssignType();
+        //$this->AssignType();
+
+        $this->MakeMenu();
+
+        return;
         PathTools::RecursiveAllDirs($this->pathToPackage, 'CreateDir', $this);
         PathTools::RecursiveAllFiles($this->pathToPackage, 'MoveFiles', $this);
     }
