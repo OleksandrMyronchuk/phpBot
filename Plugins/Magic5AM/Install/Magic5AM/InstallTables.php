@@ -10,24 +10,10 @@ class InstallTables extends dbModule
 
     function Install()
     {
-        $this->InstallReceivedMessage();
         $this->InstallDebugSettingsForStart();
         $this->InstallUsers();
         $this->InstallUsersDays();
         $this->InstallDataToExport();
-        $this->InstallSentMessage();
-    }
-
-    private function InstallSentMessage()
-    {
-        $cmd = file_get_contents(ABSPATH . 'Resource/MySQLCommands/CREATE_TABLE_SentMessage.sql');
-        $this->Execute($cmd);
-    }
-
-    private function InstallReceivedMessage()
-    {
-        $cmd = file_get_contents(ABSPATH . 'Resource/MySQLCommands/CREATE_TABLE_ReceivedMessage.sql');
-        $this->Execute($cmd);
     }
 
     private function InstallDebugSettingsForStart()

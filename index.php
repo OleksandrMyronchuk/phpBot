@@ -20,7 +20,7 @@ require_once ABSPATH . 'dbConnect.php';
 require_once ABSPATH . 'CommandModule/ProcessCommand.php';
 require_once ABSPATH . 'StructureModule/StructReceivedMessage.php';
 require_once ABSPATH . 'StructureModule/StructSentMessage.php';
-require_once ABSPATH . 'DataBaseModule/Tables/SentMessage.php';
+/*require_once ABSPATH . 'DataBaseModule/Tables/SentMessage.php';*/
 
 $input = file_get_contents('php://input');
 $update = json_decode($input, JSON_OBJECT_AS_ARRAY);
