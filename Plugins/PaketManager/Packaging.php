@@ -12,39 +12,36 @@
 
 define( 'ABSPATH', __DIR__ . '/../../' );
 
+require_once ABSPATH . 'Tools/PathTools.php';
+
 class Packaging
 {
+    public $zip;
+    public $rootPath;
+
     function __construct($pathToPath)
     {
         // Get real path for our folder
-        $rootPath = realpath($pathToPath);
+        $this->rootPath = realpath($pathToPath);
 
         // Initialize archive object
-        $zip = new ZipArchive();
-        $zip->open(basename($pathToPath) . '.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
-        
-        // Create recursive directory iterator
-        $files = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($rootPath),
-            RecursiveIteratorIterator::LEAVES_ONLY
-        );
+        $this->zip = new ZipArchive();
+        $this->zip->open(basename($pathToPath) . '.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
-        foreach ($files as $name => $file)
-        {
-            // Skip directories (they would be added automatically)
-            if (!$file->isDir())
-            {
-                // Get real and relative path for current file
-                $filePath = $file->getRealPath();
-                $relativePath = substr($filePath, strlen($rootPath) + 1);
-
-                // Add current file to archive
-                $zip->addFile($filePath, $relativePath);
-            }
-        }
+        PathTools::RecursiveAllFiles($this->rootPath, 'ZipFiles', $this);
 
         // Zip archive will be created only after closing object
-        $zip->close();
+        $this->zip->close();
+    }
+
+    public function ZipFiles($file)
+    {
+        // Get real and relative path for current file
+        $filePath = $file->getRealPath();
+        $relativePath = substr($filePath, strlen($this->rootPath) + 1);
+
+        // Add current file to archive
+        $this->zip->addFile($filePath, $relativePath);
     }
 }
 
