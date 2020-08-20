@@ -70,19 +70,37 @@ class Unpackaging
         ресурс
         структура
            */
-    public function ff($pathToFile)
-    {
-        $a = realpath( $pathToFile );
-        $a = str_replace( '\\', '/', $a );
-        $b = str_replace( '/Plugins/PaketManager/Magic5AM', '', $a );
 
-        copy($a, $b);
+    public function GetPathToCopy($pathToFile)
+    {
+        $pluginPath = realpath( $pathToFile );
+        $pluginPath = str_replace( '\\', '/', $pluginPath );
+        $phpBotPath = str_replace( '/Plugins/PaketManager/Magic5AM', '', $pluginPath );
+
+        //echo $pluginPath . PHP_EOL . '<br>' . $phpBotPath . PHP_EOL . '<br><br>';
+
+        return array('pluginPath' => $pluginPath, 'phpBotPath' => $phpBotPath);
+    }
+
+    public function CreateDir($pathToFile)
+    {
+        $a = $this->GetPathToCopy($pathToFile);
+
+        PathTools::CreateDirIfNotExist($a['phpBotPath']);
+    }
+
+    public function MoveFiles($pathToFile)
+    {
+        $a = $this->GetPathToCopy($pathToFile);
+
+        copy($a['pluginPath'], $a['phpBotPath']);
     }
 
     public function f()
     {
         $this->AssignType();
-        PathTools::RecursiveAllFiles($this->pathToPackage, 'ff', $this);
+        PathTools::RecursiveAllDirs($this->pathToPackage, 'CreateDir', $this);
+        PathTools::RecursiveAllFiles($this->pathToPackage, 'MoveFiles', $this);
     }
 }
 

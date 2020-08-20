@@ -1,0 +1,4 @@
+command
+Magic5AM
+0.1
+Magic5AM

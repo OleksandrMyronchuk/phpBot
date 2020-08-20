@@ -6,13 +6,40 @@ class PathTools
         return $protocol.$_SERVER['HTTP_HOST'].'/'.str_replace($_SERVER['DOCUMENT_ROOT'], '', $file);//realpath!!!!!!!!!!!!!!!!!!!!!
     }
 
-    public static function RecursiveAllFiles($rootPath, $callback, $currentObj)
+    private static function GetRecursiveDirectory($rootPath)
     {
         // Create recursive directory iterator
         $files = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($rootPath),
             RecursiveIteratorIterator::LEAVES_ONLY
         );
+        return $files;
+    }
+
+    public static function CreateDirIfNotExist($path)
+    {
+        if (!file_exists($path)) {
+            mkdir($path, 0755, true);
+        }
+    }
+
+    public static function RecursiveAllDirs($rootPath, $callback, $currentObj)
+    {
+        $files = PathTools::GetRecursiveDirectory($rootPath);
+
+        foreach ($files as $name => $file)
+        {
+            // Skip directories (they would be added automatically)
+            if ($file->isDir())
+            {
+                call_user_func_array (array($currentObj, $callback), array($file));
+            }
+        }
+    }
+
+    public static function RecursiveAllFiles($rootPath, $callback, $currentObj)
+    {
+        $files = PathTools::GetRecursiveDirectory($rootPath);
 
         foreach ($files as $name => $file)
         {
