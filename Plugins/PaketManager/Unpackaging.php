@@ -71,7 +71,7 @@ class Unpackaging
             $menuResult .= str_replace('[MENUNAME]', $menu['name'], $tempMenu) . PHP_EOL;
 
             $subMenuResult = '';
-            foreach ($menuContent['SubMenu'] as $subMenu)
+            foreach ($menu['SubMenu'] as $subMenu)
             {
                 $subMenuResult .=
                     str_replace('[FILENAME]', ($subMenu['path'] == null ? $subMenu['fileName'] : $subMenu['path']),
@@ -212,7 +212,9 @@ class Unpackaging
 
         //$this->IncludeCommand();
 
-        $this->MergeCommand();
+        //$this->MergeCommand();
+
+        //$this->MergePhrase();
 
         return;
         FileTools::RecursiveAllDirs($this->pathToPackage, 'CreateDir', $this);

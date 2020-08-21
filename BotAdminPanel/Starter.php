@@ -52,14 +52,11 @@ isLogged('login.html');
                 <div class="menu-inner">
                     <nav>
                         <ul class="metismenu" id="menu">
-                            <li class="active">
-                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-dashboard"></i><span>Command Start</span></a>
-                                <ul class="collapse">
-                                    <li><a href="#" onclick="LoadFrame(this, 'UserSettings.php', 'Command Start')">Change the number of days</a></li>
-                                    <li><a href="#" onclick="LoadFrame(this, 'Export.php', 'Command Start')">Export Data</a></li>
-                                    <li><a href="#" onclick="LoadFrame(this, 'UserInfo.php', 'Command Start')">User Information</a></li>
-                                </ul>
-                            </li>
+                            <?php
+                            //Begin | Menu Part
+                            require_once ABSPATH . 'BotAdminPanel/Magic5AM/Menu.php';
+                            //End | Menu Part
+                            ?>
                             <li>
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="fa fa-align-left"></i>
                                     <span>Website Logs</span></a>
