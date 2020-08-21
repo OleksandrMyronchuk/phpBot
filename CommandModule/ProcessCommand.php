@@ -9,7 +9,7 @@ require_once ABSPATH . 'StructureModule/StructCommand.php';
 require_once ABSPATH . 'Resource/CommandPhraseModule.php';
 require_once ABSPATH . 'Defines.php';
 
-$commandDictionary = array_merge();
+$commandDictionary = array_merge(cdForMagic5AM);
 
 class ProcessCommand
 {

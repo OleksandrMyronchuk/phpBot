@@ -92,28 +92,43 @@ class Unpackaging
     {
         $pathToPC = ABSPATH . 'CommandModule/ProcessCommand.php';
         $search = '$commandDictionary = array_merge';
-        $a = FileTools::FindLineByText($pathToPC, $search);
+        $cdArray = FileTools::FindStringByText($pathToPC, $search);
 
-        echo $a['content'];
-        /*
-        find $commandDictionary = array_merge
-        get row number
-        find ) in row
-        replace to  cdFor[plugin name]
-         */
+        $fp = fopen($pathToPC, 'r');
+        fseek($fp, $cdArray['position']);
+
+        $OrgContent = $content = fread($fp, strlen( $cdArray['content'] ) );
+
+        $search = ');';
+
+        $replace = 'cdFor' . $this->packageName . $search;
+
+        if(strpos($content, '(' . $search) !== false) {
+            $content = str_replace($search, $replace, $content);
+        }
+        else {
+            $content = str_replace( $search, ', ' . $replace, $content);
+        }
+
+        $contentOfPC = file_get_contents($pathToPC);
+
+        $newContentOfPC = str_replace($OrgContent, $content, $contentOfPC);
+
+        file_put_contents($pathToPC, $newContentOfPC);
     }
 
     public function IncludeCommand()
     {
         $pathToPC = ABSPATH . 'CommandModule/ProcessCommand.php';
         $contentOfPC = file_get_contents($pathToPC);
+        $search = '<?php';
         $includeLine =
             '<?php' .
             PHP_EOL .
             'require_once ABSPATH . \'CommandModule/' .
             $this->packageName .
             '/CommandDictionary.php\';';
-        $contentOfPC = str_replace('<?php', $includeLine, $contentOfPC);
+        $contentOfPC = str_replace( $search, $includeLine, $contentOfPC);
         file_put_contents($pathToPC, $contentOfPC);
     }
 

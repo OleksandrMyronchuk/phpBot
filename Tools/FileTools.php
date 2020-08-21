@@ -16,13 +16,13 @@ class FileTools
         return $files;
     }
 
-    public static function FindLineByText($pathToFile, $text)
+    public static function FindStringByText($pathToFile, $text)
     {
         if(!file_exists($pathToFile)) return null;
         $handle = fopen($pathToFile, 'r');
         $found = false;
         $buffer = '';
-        $position = '';
+        $position = 0;
         if ($handle)
         {
             $countline = 0;
@@ -31,9 +31,9 @@ class FileTools
                 if (strpos($buffer, $text) !== false)
                 {
                     $found = true;
-                    $position += strlen($buffer);
                     break;
                 }
+                $position += strlen($buffer);
                 $countline++;
             }
             fclose($handle);
