@@ -1,12 +1,15 @@
 <?php
+require_once ABSPATH . 'CommandModule/Magic5AM/CommandDictionary.php';
 
-require_once ABSPATH . 'StructureModule/StructCommand.php';/*
-require_once ABSPATH . 'CommandModule/CommandStart2.php';
+/*require_once ABSPATH . 'CommandModule/CommandStart2.php';
 require_once ABSPATH . 'CommandModule/CommandCancel.php';
 require_once ABSPATH . 'DataBaseModule/Tables/ReceivedMessage.php';
 require_once ABSPATH . 'DebugTools/DebugForStartCommand.php';*/
+require_once ABSPATH . 'StructureModule/StructCommand.php';
 require_once ABSPATH . 'Resource/CommandPhraseModule.php';
 require_once ABSPATH . 'Defines.php';
+
+$commandDictionary = array_merge();
 
 class ProcessCommand
 {

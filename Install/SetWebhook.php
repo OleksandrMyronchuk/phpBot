@@ -2,11 +2,11 @@
 
 define( 'ABSPATH', __DIR__ . '/../' );
 
-require_once ABSPATH . 'Tools/PathTools.php';
+require_once ABSPATH . 'Tools/FileTools.php';
 
 $telegramSetWebhookPath = 'https://api.telegram.org/bot%s/setWebhook?url=%s';
 $botToken = $_POST['botToken'];
-$currentPathIndex = PathTools::Path2url(ABSPATH . 'index.php');
+$currentPathIndex = FileTools::Path2url(ABSPATH . 'index.php');
 
 if(!empty($botToken))
 {

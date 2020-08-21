@@ -2,7 +2,7 @@
 
 define( 'ABSPATH', __DIR__ . '/../../' );
 
-require_once ABSPATH . 'Tools/PathTools.php';
+require_once ABSPATH . 'Tools/FileTools.php';
 
 class TypeOfPackage {
     const Command = 0;
@@ -43,11 +43,11 @@ class Unpackaging
         fclose($f);
         if($line == 'command')
         {
-            $this->typeOfPackage = new TypeOfPackage(TypeOfPackage::Command);
+            $this->typeOfPackage = TypeOfPackage::Command;
         }
         elseif($line == 'addition')
         {
-            $this->typeOfPackage = new TypeOfPackage(TypeOfPackage::Addition);
+            $this->typeOfPackage = TypeOfPackage::Addition;
         }
         else
         {
@@ -90,12 +90,31 @@ class Unpackaging
 
     public function MergeCommand()
     {
-        
+        $pathToPC = ABSPATH . 'CommandModule/ProcessCommand.php';
+        $search = '$commandDictionary = array_merge';
+        $a = FileTools::FindLineByText($pathToPC, $search);
+
+        echo $a['content'];
+        /*
+        find $commandDictionary = array_merge
+        get row number
+        find ) in row
+        replace to  cdFor[plugin name]
+         */
     }
 
     public function IncludeCommand()
     {
-
+        $pathToPC = ABSPATH . 'CommandModule/ProcessCommand.php';
+        $contentOfPC = file_get_contents($pathToPC);
+        $includeLine =
+            '<?php' .
+            PHP_EOL .
+            'require_once ABSPATH . \'CommandModule/' .
+            $this->packageName .
+            '/CommandDictionary.php\';';
+        $contentOfPC = str_replace('<?php', $includeLine, $contentOfPC);
+        file_put_contents($pathToPC, $contentOfPC);
     }
 
     public function MakeCommand()
@@ -158,7 +177,7 @@ class Unpackaging
     {
         $a = $this->GetPathToCopy($pathToFile);
 
-        PathTools::CreateDirIfNotExist($a['phpBotPath']);
+        FileTools::CreateDirIfNotExist($a['phpBotPath']);
     }
 
     public function MoveFiles($pathToFile)
@@ -174,11 +193,15 @@ class Unpackaging
 
         //$this->MakeMenu();
 
-        $this->MakeCommand();
+        //$this->MakeCommand();
+
+        //$this->IncludeCommand();
+
+        $this->MergeCommand();
 
         return;
-        PathTools::RecursiveAllDirs($this->pathToPackage, 'CreateDir', $this);
-        PathTools::RecursiveAllFiles($this->pathToPackage, 'MoveFiles', $this);
+        FileTools::RecursiveAllDirs($this->pathToPackage, 'CreateDir', $this);
+        FileTools::RecursiveAllFiles($this->pathToPackage, 'MoveFiles', $this);
     }
 }
 

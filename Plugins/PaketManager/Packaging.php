@@ -12,7 +12,7 @@
 
 define( 'ABSPATH', __DIR__ . '/../../' );
 
-require_once ABSPATH . 'Tools/PathTools.php';
+require_once ABSPATH . 'Tools/FileTools.php';
 
 class Packaging
 {
@@ -28,7 +28,7 @@ class Packaging
         $this->zip = new ZipArchive();
         $this->zip->open(basename($pathToPath) . '.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
-        PathTools::RecursiveAllFiles($this->rootPath, 'ZipFiles', $this);
+        FileTools::RecursiveAllFiles($this->rootPath, 'ZipFiles', $this);
 
         // Zip archive will be created only after closing object
         $this->zip->close();
