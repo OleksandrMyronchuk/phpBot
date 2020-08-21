@@ -88,9 +88,34 @@ class Unpackaging
             $menuResult);
     }
 
+    public function MergeCommand()
+    {
+        
+    }
+
+    public function IncludeCommand()
+    {
+
+    }
+
     public function MakeCommand()
     {
-        $pathToCommand = $this->pathToPackage . 'CommandModule/Magic5AM/ListOfCommands.json';
+        $pathToCommand = $this->pathToPackage . '/CommandModule/Magic5AM/ListOfCommands.json';
+
+        if(!file_exists($pathToCommand)) return;
+        $commandContent = file_get_contents($pathToCommand);
+        $commandContent = json_decode($commandContent, true);
+
+        $commandResult = '<?php' . PHP_EOL .
+        '$cdFor' . $this->packageName . ' = array(\'';
+
+        $commandResult .= implode('\', \'', $commandContent['commands']);
+
+        $commandResult .= '\');'  . PHP_EOL . '?>';
+
+        file_put_contents(
+            ABSPATH . 'CommandModule/' .  $this->packageName . '/CommandDictionary.php',
+            $commandResult);
     }
 
     public function MakeDeleteFile()
@@ -147,7 +172,9 @@ class Unpackaging
     {
         //$this->AssignType();
 
-        $this->MakeMenu();
+        //$this->MakeMenu();
+
+        $this->MakeCommand();
 
         return;
         PathTools::RecursiveAllDirs($this->pathToPackage, 'CreateDir', $this);
