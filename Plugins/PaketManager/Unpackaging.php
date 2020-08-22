@@ -86,6 +86,10 @@ class Unpackaging
         file_put_contents(
             ABSPATH . 'BotAdminPanel/' .  $this->packageName . '/Menu.php',
             $menuResult);
+
+        $pathToMenu = ABSPATH . 'BotAdminPanel/' .  $this->packageName . '/Menu.json';
+
+        unlink($pathToMenu);
     }
 
     public function MergeCommand()
@@ -150,6 +154,10 @@ class Unpackaging
         file_put_contents(
             ABSPATH . 'CommandModule/' .  $this->packageName . '/CommandDictionary.php',
             $commandResult);
+
+        $pathToCommand = ABSPATH . 'CommandModule/' .  $this->packageName . '/ListOfCommands.json';
+
+        unlink($pathToCommand);
     }
 
     public function MakeDeleteFile()
@@ -221,25 +229,24 @@ class Unpackaging
 
     public function DoUnpackaging()
     {
-        //$this->AssignType();
-
-        //$this->MakeMenu();
-
-        //$this->IncludeMenu();
-
-        //$this->MakeCommand();
-
-        //$this->IncludeCommand();
-
-        //$this->MergeCommand();
-
-        //$this->MergePhrase();
-
-        $this->MakeDeleteFile();
-        /* Робити делете файл перед розпаковкою */
-        return;
         FileTools::RecursiveAllDirs($this->pathToPackage, 'CreateDir', $this);
         FileTools::RecursiveAllFiles($this->pathToPackage, 'MoveFiles', $this);
+
+        $this->AssignType();
+
+        $this->MakeMenu();
+
+        $this->IncludeMenu();
+
+        $this->MakeCommand();
+
+        $this->IncludeCommand();
+
+        $this->MergeCommand();
+
+        $this->MergePhrase();
+
+        $this->MakeDeleteFile();
     }
 }
 
