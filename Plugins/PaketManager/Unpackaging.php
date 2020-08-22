@@ -202,11 +202,30 @@ class Unpackaging
         copy($a['pluginPath'], $a['phpBotPath']);
     }
 
+    public function IncludeMenu()
+    {
+        $pathToStarter = ABSPATH . 'BotAdminPanel/Starter.php';
+
+        if(!file_exists($pathToStarter)) return;
+        $starterContent = file_get_contents($pathToStarter);
+
+        $search = '//Begin | Menu Part';
+        $replace = $search . PHP_EOL . 'require_once ABSPATH . \'BotAdminPanel/' . $this->packageName . '/Menu.php\';';
+
+        $starterContent = str_replace($search, $replace, $starterContent);
+
+        echo 'ok' . $starterContent;
+
+        file_put_contents($pathToStarter, $starterContent);
+    }
+
     public function DoUnpackaging()
     {
         //$this->AssignType();
 
         //$this->MakeMenu();
+
+        //$this->IncludeMenu();
 
         //$this->MakeCommand();
 
@@ -216,6 +235,8 @@ class Unpackaging
 
         //$this->MergePhrase();
 
+        $this->MakeDeleteFile();
+        /* Робити делете файл перед розпаковкою */
         return;
         FileTools::RecursiveAllDirs($this->pathToPackage, 'CreateDir', $this);
         FileTools::RecursiveAllFiles($this->pathToPackage, 'MoveFiles', $this);
