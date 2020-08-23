@@ -10,10 +10,10 @@ if ( $_SERVER['REQUEST_METHOD']=='GET' &&
     header( 'HTTP/1.0 403 Forbidden', TRUE, 403 );
     die;
 }
-require_once __DIR__ . '/../Define.php';
-require_once ABSPATH . 'BotAdminPanel/Export/AbstractExport.php';
-require_once ABSPATH . 'Sheets/GoogleSheetsMain.php';
-require_once ABSPATH . 'StructureModule/CustomStructure/StructGoogleSheets.php';
+require_once __DIR__ . '/../../Define.php';
+require_once ABSPATH . 'BotAdminPanel/Magic5AM/Export/AbstractExport.php';
+require_once ABSPATH . 'Addition/Sheets/GoogleSheetsMain.php';
+require_once ABSPATH . 'StructureModule/Sheets/StructGoogleSheets.php';
 
 class GoogleSheetsReport extends AbstractExport
 {

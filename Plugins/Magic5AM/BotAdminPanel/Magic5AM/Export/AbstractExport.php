@@ -10,16 +10,16 @@ if ( $_SERVER['REQUEST_METHOD']=='GET' &&
     header( 'HTTP/1.0 403 Forbidden', TRUE, 403 );
     die;
 }
-require_once __DIR__ . '/../Define.php';
+require_once __DIR__ . '/../../Define.php';
 require_once ABSPATH . 'BotAdminPanel/DBConnection.php';
-require_once ABSPATH . 'BotAdminPanel/Abstract/AbstractDate.php';
+require_once ABSPATH . 'BotAdminPanel/Magic5AM/Abstract/AbstractDate.php';
 
 class AbstractExport extends AbstractDate
 {
     function GetData()
     {
         global $db;
-        $cmd = file_get_contents(ABSPATH . 'Resource/MySQLCommands/GetDataToExport.sql');
+        $cmd = file_get_contents(ABSPATH . 'Resource/Magic5AM/SQL/GetDataToExport.sql');
 
         $pdoStatement = $db->pdo->prepare($cmd);
 

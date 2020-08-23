@@ -7,7 +7,7 @@ class Users
     {
         global $db;
 
-        $cmd = file_get_contents(ABSPATH . 'Resource/MySQLCommands/CheckIfUserExist.sql');
+        $cmd = file_get_contents(ABSPATH . 'Resource/Magic5AM/SQL/CheckIfUserExist.sql');
 
         $pdoStatement = $db->pdo->prepare($cmd);
         $pdoStatement->bindParam(':_UserId', $receivedMessage->user_id, PDO::PARAM_INT);
@@ -18,7 +18,7 @@ class Users
 
         if($result['NumberOfUsers'] == 0)
         {
-            $cmd = file_get_contents(ABSPATH . 'Resource/MySQLCommands/InsertUser.sql');
+            $cmd = file_get_contents(ABSPATH . 'Resource/Magic5AM/SQL/InsertUser.sql');
 
             $pdoStatement = $db->pdo->prepare($cmd);
 
@@ -31,7 +31,7 @@ class Users
         }
         else
         {
-            $cmd = file_get_contents(ABSPATH . 'Resource/MySQLCommands/UpdateUser.sql');
+            $cmd = file_get_contents(ABSPATH . 'Resource/Magic5AM/SQL/UpdateUser.sql');
 
             $pdoStatement = $db->pdo->prepare($cmd);
 

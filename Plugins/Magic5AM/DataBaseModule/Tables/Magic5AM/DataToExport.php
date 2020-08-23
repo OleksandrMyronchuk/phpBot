@@ -6,7 +6,7 @@ class DataToExport
     function GetJSONDataToExport($beginDate, $endDate)
     {
         global $db;
-        $cmd = file_get_contents(ABSPATH . 'Resource/MySQLCommands/GetCurrentDay.sql');
+        $cmd = file_get_contents(ABSPATH . 'Resource/Magic5AM/SQL/GetCurrentDay.sql');
 
         $pdoStatement = $db->pdo->prepare($cmd);
 

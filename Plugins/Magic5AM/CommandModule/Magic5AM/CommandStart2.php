@@ -1,14 +1,14 @@
 <?php
 
 require_once ABSPATH . 'DataBaseModule/Tables/ReceivedMessage.php';
-require_once ABSPATH . 'Resource/CommandPhraseModule.php';
+require_once ABSPATH . 'Resource/Magic5AM/Text/CommandPhraseModule.php';
 require_once ABSPATH . 'CommandModule/AbstractCommand.php';
-require_once ABSPATH . 'StructureModule/CustomStructure/StructGoogleSheets.php';
-require_once ABSPATH . 'Sheets/GoogleSheetsMain.php';
-require_once ABSPATH . 'DataBaseModule/Tables/Users.php';
-require_once ABSPATH . 'DataBaseModule/Tables/UsersDays.php';
-require_once ABSPATH . 'DebugTools/DebugForStartCommand.php';
-require_once ABSPATH . 'DataBaseModule/Tables/DataToExport.php';
+require_once ABSPATH . 'StructureModule/Sheets/StructGoogleSheets.php';
+require_once ABSPATH . 'Addition/Sheets/GoogleSheetsMain.php';
+require_once ABSPATH . 'DataBaseModule/Tables/Magic5AM/Users.php';
+require_once ABSPATH . 'DataBaseModule/Tables/Magic5AM/UsersDays.php';
+require_once ABSPATH . 'DebugTools/Magic5AM/DebugForStartCommand.php';
+require_once ABSPATH . 'DataBaseModule/Tables/Magic5AM/DataToExport.php';
 require_once ABSPATH . 'DataBaseModule/Tables/SentMessage.php';
 require_once ABSPATH . 'Defines.php';
 

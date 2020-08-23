@@ -2,13 +2,13 @@
 
 class CommandPhraseModule
 {
-    private $pathToCommandPhrases = 'Resource/CommandPhrases';
+    private $pathToCommandPhrases = ABSPATH . 'Resource/Magic5AM/Text/CommandPhrases';
     private $commandPhrases;
     public function __construct($commandName)
     {
         $this->commandPhrases =
             json_decode(file_get_contents($this->pathToCommandPhrases),
-                JSON_OBJECT_AS_ARRAY)[$commandName];
+                JSON_OBJECT_AS_ARRAY)['Magic5AM'][$commandName];
     }
 
     public function GetPhraseById($id)

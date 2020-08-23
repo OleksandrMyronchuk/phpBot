@@ -1,5 +1,7 @@
 <?php
 
+require_once ABSPATH . 'Resource/Magic5AM/Text/CommandPhraseModule.php';
+
 $allow_duplicate = null;
 $allow_incorrect_time = null;
 
@@ -16,7 +18,7 @@ class DebugForStartCommand
     {
         global $db;
 
-        $cmd = file_get_contents(ABSPATH . 'Resource/MySQLCommands/GetDebugSettingsForStartCommand.sql');
+        $cmd = file_get_contents(ABSPATH . 'Resource/Magic5AM/SQL/GetDebugSettingsForStartCommand.sql');
 
         $result = $db->pdo->query($cmd)->fetch(PDO::FETCH_ASSOC);
 
@@ -30,7 +32,7 @@ class DebugForStartCommand
     function SetIgnoreTime($isAllowIncorrectTime)
     {
         global $db;
-        $cmd = file_get_contents(ABSPATH . 'Resource/MySQLCommands/SetIgnoreTime.sql');
+        $cmd = file_get_contents(ABSPATH . 'Resource/Magic5AM/SQL/SetIgnoreTime.sql');
 
         $pdoStatement = $db->pdo->prepare($cmd);
 
@@ -42,7 +44,7 @@ class DebugForStartCommand
     function SetIgnoreDuplicate($isAllowDuplicate)
     {
         global $db;
-        $cmd = file_get_contents(ABSPATH . 'Resource/MySQLCommands/SetIgnoreDuplicate.sql');
+        $cmd = file_get_contents(ABSPATH . 'Resource/Magic5AM/SQL/SetIgnoreDuplicate.sql');
 
         $pdoStatement = $db->pdo->prepare($cmd);
 

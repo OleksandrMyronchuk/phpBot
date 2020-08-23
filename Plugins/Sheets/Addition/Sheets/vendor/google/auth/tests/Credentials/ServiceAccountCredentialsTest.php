@@ -141,7 +141,7 @@ class SACConstructorTest extends \PHPUnit_Framework_TestCase
 
     public function testInitalizeFromAFile()
     {
-        $keyFile = __DIR__ . '/../fixtures';
+        $keyFile = __DIR__ . '/../fixtures' . '/private.json';
         $this->assertNotNull(
             new ServiceAccountCredentials('scope/1', $keyFile)
         );
@@ -172,7 +172,7 @@ class SACFromEnvTest extends \PHPUnit_Framework_TestCase
 
     public function testSucceedIfFileExists()
     {
-        $keyFile = __DIR__ . '/../fixtures';
+        $keyFile = __DIR__ . '/../fixtures' . '/private.json';
         putenv(ServiceAccountCredentials::ENV_VAR . '=' . $keyFile);
         $this->assertNotNull(ApplicationDefaultCredentials::getCredentials('a scope'));
     }
@@ -218,7 +218,7 @@ class SACFetchAuthTokenTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->privateKey =
-            file_get_contents(__DIR__ . '/../fixtures');
+            file_get_contents(__DIR__ . '/../fixtures' . '/private.pem');
     }
 
     private function createTestJson()
@@ -314,7 +314,7 @@ class SACJwtAccessTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->privateKey =
-            file_get_contents(__DIR__ . '/../fixtures');
+            file_get_contents(__DIR__ . '/../fixtures' . '/private.pem');
     }
 
     private function createTestJson()
@@ -440,7 +440,7 @@ class SACJwtAccessComboTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->privateKey =
-            file_get_contents(__DIR__ . '/../fixtures');
+            file_get_contents(__DIR__ . '/../fixtures' . '/private.pem');
     }
 
     private function createTestJson()

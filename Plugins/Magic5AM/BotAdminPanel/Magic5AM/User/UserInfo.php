@@ -10,9 +10,9 @@ if ( $_SERVER['REQUEST_METHOD']=='GET' &&
     header( 'HTTP/1.0 403 Forbidden', TRUE, 403 );
     die;
 }
-require_once __DIR__ . '/../Define.php';
+require_once __DIR__ . '/../../Define.php';
 require_once ABSPATH . 'BotAdminPanel/DBConnection.php';
-require_once ABSPATH . 'BotAdminPanel/Abstract/AbstractDate.php';
+require_once ABSPATH . 'BotAdminPanel/Magic5AM/Abstract/AbstractDate.php';
 
 class UserInfo extends AbstractDate
 {
@@ -33,15 +33,15 @@ class UserInfo extends AbstractDate
 
         if($this->enumAction[$action] == 'Accept')
         {
-            $path = ABSPATH . 'Resource/MySQLCommands/GetWhoAcceptMembers.sql';
+            $path = ABSPATH . 'Resource/Magic5AM/SQL/GetWhoAcceptMembers.sql';
         }
         elseif ($this->enumAction[$action] == 'NotAccept')
         {
-            $path = ABSPATH . 'Resource/MySQLCommands/GetWhoNotAcceptMembers.sql';
+            $path = ABSPATH . 'Resource/Magic5AM/SQL/GetWhoNotAcceptMembers.sql';
         }
         elseif ($this->enumAction[$action] == 'All')
         {
-            $path = ABSPATH . 'Resource/MySQLCommands/GetAllUsers.sql';
+            $path = ABSPATH . 'Resource/Magic5AM/SQL/GetAllUsers.sql';
         }
 
         $cmd = file_get_contents($path);
