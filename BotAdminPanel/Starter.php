@@ -54,6 +54,7 @@ isLogged('login.html');
                         <ul class="metismenu" id="menu">
                             <?php
                             //Begin | Menu Part
+require_once ABSPATH . 'BotAdminPanel/Magic5AM/Menu.php';
                             //End | Menu Part
                             ?>
                             <li>

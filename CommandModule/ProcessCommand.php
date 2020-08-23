@@ -1,4 +1,5 @@
 <?php
+require_once ABSPATH . 'CommandModule/Magic5AM/CommandDictionary.php';
 
 /*require_once ABSPATH . 'CommandModule/CommandStart2.php';
 require_once ABSPATH . 'CommandModule/CommandCancel.php';
@@ -8,7 +9,7 @@ require_once ABSPATH . 'StructureModule/StructCommand.php';
 require_once ABSPATH . 'Resource/Phrase.php';
 require_once ABSPATH . 'Defines.php';
 
-$commandDictionary = array_merge();
+$commandDictionary = array_merge($cdForMagic5AM);
 
 class ProcessCommand
 {

@@ -20,10 +20,7 @@ class Unpackaging
         $this->pathToPackage = getcwd() . '/' . $packageName;
         $this->packageName = $packageName;
 
-        $this->DoUnpackaging();
-        return;
-
-        if(file_exists($this->pathToPackage . '.zip'))
+        if(is_dir($this->pathToPackage))
         {
             $this->DoUnpackaging();
             return;
@@ -175,9 +172,6 @@ class Unpackaging
 
         $commandResult .= PHP_EOL . ');'  . PHP_EOL . '?>';
 
-        echo $commandResult;
-        return;
-
         file_put_contents(
             ABSPATH . 'CommandModule/' .  $this->packageName . '/CommandDictionary.php',
             $commandResult);
@@ -254,9 +248,6 @@ class Unpackaging
 
     public function DoUnpackaging()
     {
-        $this->MakeCommand();
-        return;
-
         FileTools::RecursiveAllDirs($this->pathToPackage, 'CreateDir', $this);
         FileTools::RecursiveAllFiles($this->pathToPackage, 'MoveFiles', $this);
 
@@ -285,4 +276,4 @@ class Unpackaging
     }
 }
 
-new Unpackaging('Magic5AM');//'Sheets'
+new Unpackaging('Sheets');//'Magic5AM'
