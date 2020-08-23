@@ -15,70 +15,24 @@
  * the License.
  */
 
-class Google_Service_AbusiveExperienceReport_SiteSummaryResponse extends Google_Model
+class Google_Service_AbusiveExperienceReport_ViolatingSitesResponse extends Google_Collection
 {
-  public $abusiveStatus;
-  public $enforcementTime;
-  public $filterStatus;
-  public $lastChangeTime;
-  public $reportUrl;
-  public $reviewedSite;
-  public $underReview;
+  protected $collection_key = 'violatingSites';
+  protected $violatingSitesType = 'Google_Service_AbusiveExperienceReport_SiteSummaryResponse';
+  protected $violatingSitesDataType = 'array';
 
-  public function setAbusiveStatus($abusiveStatus)
+  /**
+   * @param Google_Service_AbusiveExperienceReport_SiteSummaryResponse
+   */
+  public function setViolatingSites($violatingSites)
   {
-    $this->abusiveStatus = $abusiveStatus;
+    $this->violatingSites = $violatingSites;
   }
-  public function getAbusiveStatus()
+  /**
+   * @return Google_Service_AbusiveExperienceReport_SiteSummaryResponse
+   */
+  public function getViolatingSites()
   {
-    return $this->abusiveStatus;
-  }
-  public function setEnforcementTime($enforcementTime)
-  {
-    $this->enforcementTime = $enforcementTime;
-  }
-  public function getEnforcementTime()
-  {
-    return $this->enforcementTime;
-  }
-  public function setFilterStatus($filterStatus)
-  {
-    $this->filterStatus = $filterStatus;
-  }
-  public function getFilterStatus()
-  {
-    return $this->filterStatus;
-  }
-  public function setLastChangeTime($lastChangeTime)
-  {
-    $this->lastChangeTime = $lastChangeTime;
-  }
-  public function getLastChangeTime()
-  {
-    return $this->lastChangeTime;
-  }
-  public function setReportUrl($reportUrl)
-  {
-    $this->reportUrl = $reportUrl;
-  }
-  public function getReportUrl()
-  {
-    return $this->reportUrl;
-  }
-  public function setReviewedSite($reviewedSite)
-  {
-    $this->reviewedSite = $reviewedSite;
-  }
-  public function getReviewedSite()
-  {
-    return $this->reviewedSite;
-  }
-  public function setUnderReview($underReview)
-  {
-    $this->underReview = $underReview;
-  }
-  public function getUnderReview()
-  {
-    return $this->underReview;
+    return $this->violatingSites;
   }
 }

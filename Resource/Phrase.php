@@ -1,6 +1,6 @@
 <?php
 
-class CommandPhraseModule
+class Phrase
 {
     private $pathToCommandPhrases = 'Resource/CommandPhrases';
     private $commandPhrases;

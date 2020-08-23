@@ -104,7 +104,7 @@ class URCConstructorTest extends \PHPUnit_Framework_TestCase
 
     public function testInitalizeFromAFile()
     {
-        $keyFile = __DIR__ . '/../fixtures2';
+        $keyFile = __DIR__ . '/../fixtures2' . '/private.json';
         $this->assertNotNull(
             new UserRefreshCredentials('scope/1', $keyFile)
         );
@@ -135,7 +135,7 @@ class URCFromEnvTest extends \PHPUnit_Framework_TestCase
 
     public function testSucceedIfFileExists()
     {
-        $keyFile = __DIR__ . '/../fixtures2';
+        $keyFile = __DIR__ . '/../fixtures2' . '/private.json';
         putenv(UserRefreshCredentials::ENV_VAR . '=' . $keyFile);
         $this->assertNotNull(ApplicationDefaultCredentials::getCredentials('a scope'));
     }

@@ -51,7 +51,7 @@ class ADCGetTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadsOKIfEnvSpecifiedIsValid()
     {
-        $keyFile = __DIR__ . '/fixtures';
+        $keyFile = __DIR__ . '/fixtures' . '/private.json';
         putenv(ServiceAccountCredentials::ENV_VAR . '=' . $keyFile);
         $this->assertNotNull(
             ApplicationDefaultCredentials::getCredentials('a scope')
@@ -130,7 +130,7 @@ class ADCGetMiddlewareTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadsOKIfEnvSpecifiedIsValid()
     {
-        $keyFile = __DIR__ . '/fixtures';
+        $keyFile = __DIR__ . '/fixtures' . '/private.json';
         putenv(ServiceAccountCredentials::ENV_VAR . '=' . $keyFile);
         $this->assertNotNull(ApplicationDefaultCredentials::getMiddleware('a scope'));
     }
@@ -207,7 +207,7 @@ class ADCGetSubscriberTest extends BaseTest
 
     public function testLoadsOKIfEnvSpecifiedIsValid()
     {
-        $keyFile = __DIR__ . '/fixtures';
+        $keyFile = __DIR__ . '/fixtures' . '/private.json';
         putenv(ServiceAccountCredentials::ENV_VAR . '=' . $keyFile);
         $this->assertNotNull(ApplicationDefaultCredentials::getSubscriber('a scope'));
     }

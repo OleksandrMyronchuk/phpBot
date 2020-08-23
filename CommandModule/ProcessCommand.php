@@ -6,11 +6,10 @@ require_once ABSPATH . 'CommandModule/CommandCancel.php';
 require_once ABSPATH . 'DataBaseModule/Tables/ReceivedMessage.php';
 require_once ABSPATH . 'DebugTools/DebugForStartCommand.php';*/
 require_once ABSPATH . 'StructureModule/StructCommand.php';
-require_once ABSPATH . 'Resource/CommandPhraseModule.php';
+require_once ABSPATH . 'Resource/Phrase.php';
 require_once ABSPATH . 'Defines.php';
 
 $commandDictionary = array_merge($cdForMagic5AM);
-$classes = array_merge($classesForMagic5AM);
 
 class ProcessCommand
 {
@@ -52,23 +51,25 @@ class ProcessCommand
     function ProcessCurrentCommand($receivedMessage)
     {
         if(!in_array($receivedMessage->type, $this->type)) {
-            return ((new CommandPhraseModule('CommandAll'))->GetExceptionById(0));
+            return ((new Phrase('CommandAll'))->GetExceptionById(0));
         }
 
         $resultCmd = '';
 
         $copyReceivedMessage = $this->GetCommand($receivedMessage->text);
+        global $commandDictionary;
 
-        if(in_array($copyReceivedMessage, $this->commandDictionary))
-        {
-            $resultCmd = new StructCommand();
-            $resultCmd->command = $receivedMessage->text;
-            $resultCmd->step = 0;
+        foreach ($commandDictionary as $cmd) {
+            if ($cmd['command'] == $copyReceivedMessage) {
+                $resultCmd = new StructCommand();
+                $resultCmd->command = $receivedMessage->text;
+                $resultCmd->step = 0;
+                eval('$cmd = new ' . $cmd['className'] . '($receivedMessage, $resultCmd, $resultCmd->command);');
+                return $cmd->ExecuteCommand();
+            }
         }
-        else
-        {
-            $resultCmd = $this->GetCurrentCommand($receivedMessage->user_id);
-        }
+
+        $resultCmd = $this->GetCurrentCommand($receivedMessage->user_id);
 
         /* Check if command is executing */
         if($resultCmd == null || $resultCmd->step < 0)
@@ -79,10 +80,9 @@ class ProcessCommand
 
         $resultCmd->command = $this->GetCommand($resultCmd->command);
 
-        global $commandDictionary;
         foreach ($commandDictionary as $cmd) {
-            if ($cmd == $resultCmd->command) {
-                $cmd = eval('new ' . $classes[] . '($receivedMessage, $resultCmd, $resultCmd->command);');
+            if ($cmd['command'] == $resultCmd->command) {
+                eval('$cmd = new ' . $cmd['className'] . '($receivedMessage, $resultCmd, $resultCmd->command);');
                 return $cmd->ExecuteCommand();
             }
         }

@@ -20,7 +20,7 @@ require_once ABSPATH . 'dbConnect.php';
 require_once ABSPATH . 'CommandModule/ProcessCommand.php';
 require_once ABSPATH . 'StructureModule/StructReceivedMessage.php';
 require_once ABSPATH . 'StructureModule/StructSentMessage.php';
-/*require_once ABSPATH . 'DataBaseModule/Tables/SentMessage.php';*/
+require_once ABSPATH . 'DataBaseModule/Tables/SentMessage.php';
 
 $input = file_get_contents('php://input');
 $update = json_decode($input, JSON_OBJECT_AS_ARRAY);
@@ -51,12 +51,10 @@ if (!empty($_GET['my']) && $_GET['my']=='read2') {
 }
 */
 
-/*
-$update = json_decode('{"update_id":682545269, "message":{"message_id":80,"from":{"id":669168176,"is_bot":false,'.
-    '"first_name":"Oleksandr","last_name":"Myronchuk","username":"OleksandrMyronchuk","language_code":"en"},"chat":{'.
-    '"id":669168176,"first_name":"Oleksandr","last_name":"Myronchuk","username":"OleksandrMyronchuk","type":"private"}'.
-    ',"date":1593877630,"text":"start"}}', JSON_OBJECT_AS_ARRAY);
-*/
+$update = json_decode('{"update_id":682546456,
+"message":{"message_id":1258,"from":{"id":669168176,"is_bot":false,"first_name":"Oleksandr","last_name":"Myronchuk","username":"OleksandrMyronchuk","language_code":"en"},"chat":{"id":669168176,"first_name":"Oleksandr","last_name":"Myronchuk","username":"OleksandrMyronchuk","type":"private"},"date":1598171837,'.
+    '"text":"debug-status"}}', JSON_OBJECT_AS_ARRAY);
+
 /*
 $update = json_decode('{"update_id":682546384, "message":{"message_id":1155,"from":{"id":669168176,"is_bot":false,"first_name":"Oleksandr","last_name":"Myronchuk","username":"OleksandrMyronchuk","language_code":"en"},"chat":{"id":669168176,"first_name":"Oleksandr","last_name":"Myronchuk","username":"OleksandrMyronchuk","type":"private"},"date":1595457745,"text":"dfk"}}'
     , JSON_OBJECT_AS_ARRAY);

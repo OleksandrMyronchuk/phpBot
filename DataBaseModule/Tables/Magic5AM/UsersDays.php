@@ -5,7 +5,7 @@ class UsersDays
     public function InsertDay($userId)
     {
         global $db;
-        $cmd = file_get_contents(ABSPATH . 'Resource/MySQLCommands/InsertDay.sql');
+        $cmd = file_get_contents(ABSPATH . 'Resource/Magic5AM/SQL/InsertDay.sql');
 
         $pdoStatement = $db->pdo->prepare($cmd);
 
@@ -17,7 +17,7 @@ class UsersDays
     public function IncreaseDay($userId)
     {
         global $db;
-        $cmd = file_get_contents(ABSPATH . 'Resource/MySQLCommands/IncreaseDay.sql');
+        $cmd = file_get_contents(ABSPATH . 'Resource/Magic5AM/SQL/IncreaseDay.sql');
 
         $pdoStatement = $db->pdo->prepare($cmd);
 
@@ -29,7 +29,7 @@ class UsersDays
     public function GetCurrentDay($userId)
     {
         global $db;
-        $cmd = file_get_contents(ABSPATH . 'Resource/MySQLCommands/GetCurrentDay.sql');
+        $cmd = file_get_contents(ABSPATH . 'Resource/Magic5AM/SQL/GetCurrentDay.sql');
 
         $pdoStatement = $db->pdo->prepare($cmd);
 
