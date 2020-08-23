@@ -10,6 +10,7 @@ require_once ABSPATH . 'Resource/CommandPhraseModule.php';
 require_once ABSPATH . 'Defines.php';
 
 $commandDictionary = array_merge($cdForMagic5AM);
+$classes = array_merge($classesForMagic5AM);
 
 class ProcessCommand
 {
@@ -81,7 +82,7 @@ class ProcessCommand
         global $commandDictionary;
         foreach ($commandDictionary as $cmd) {
             if ($cmd == $resultCmd->command) {
-                $cmd = new Something($receivedMessage, $resultCmd, $resultCmd->command);
+                $cmd = eval('new ' . $classes[] . '($receivedMessage, $resultCmd, $resultCmd->command);');
                 return $cmd->ExecuteCommand();
             }
         }
