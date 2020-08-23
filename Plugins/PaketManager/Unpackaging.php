@@ -20,6 +20,9 @@ class Unpackaging
         $this->pathToPackage = getcwd() . '/' . $packageName;
         $this->packageName = $packageName;
 
+        $this->DoUnpackaging();
+        return;
+
         if(file_exists($this->pathToPackage . '.zip'))
         {
             $this->DoUnpackaging();
@@ -147,12 +150,33 @@ class Unpackaging
         $commandContent = file_get_contents($pathToCommand);
         $commandContent = json_decode($commandContent, true);
 
-        $commandResult = '<?php' . PHP_EOL .
-        '$cdFor' . $this->packageName . ' = array(\'';
+        $commandResult = '<?php' . PHP_EOL;
 
-        $commandResult .= implode('\', \'', $commandContent['commands']);
+        foreach ($commandContent['include'] as $scriptName)
+        {
+            $commandResult .= 'require_once ABSPATH . \'' . $scriptName . '\';' . PHP_EOL;
+        }
 
-        $commandResult .= '\');'  . PHP_EOL . '?>';
+        $commandResult .= PHP_EOL . '$cdFor' . $this->packageName . ' = array(' . PHP_EOL;
+
+        $len = count($commandContent['commands']);
+        for($i = 0;$i < $len; $i++) {
+            if($i != 0)
+            {
+                $commandResult .= ',' . PHP_EOL;
+            }
+            $commandResult .=
+                'array(\'command\' => \'' .
+                $commandContent['commands'][$i] .
+                '\', \'className\' => \'' .
+                $commandContent['classes'][$i] .
+                '\')';
+        }
+
+        $commandResult .= PHP_EOL . ');'  . PHP_EOL . '?>';
+
+        echo $commandResult;
+        return;
 
         file_put_contents(
             ABSPATH . 'CommandModule/' .  $this->packageName . '/CommandDictionary.php',
@@ -230,6 +254,9 @@ class Unpackaging
 
     public function DoUnpackaging()
     {
+        $this->MakeCommand();
+        return;
+
         FileTools::RecursiveAllDirs($this->pathToPackage, 'CreateDir', $this);
         FileTools::RecursiveAllFiles($this->pathToPackage, 'MoveFiles', $this);
 
@@ -258,4 +285,4 @@ class Unpackaging
     }
 }
 
-new Unpackaging('Sheets');
+new Unpackaging('Magic5AM');//'Sheets'

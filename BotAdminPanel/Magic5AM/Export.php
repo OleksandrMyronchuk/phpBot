@@ -82,8 +82,7 @@ $timeOffsetED = date(DATEFORMAT, strtotime('+' . TIMEOFFSET . ' hours'));
             if (this.readyState == 4 && this.status == 200) {}
         };
         var linkToWebSite =
-            window.location.href;
-        linkToWebSite = linkToWebSite.replace("BotAdminPanel/Magic5AM/Export.php", "Sheets/DeleteToken.php");
+            "../Addition/Sheets/DeleteToken.php";
         xhttp.open("POST", linkToWebSite, true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send();
