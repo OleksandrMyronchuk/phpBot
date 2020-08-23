@@ -20,14 +20,17 @@ class Unpackaging
         $this->pathToPackage = getcwd() . '/' . $packageName;
         $this->packageName = $packageName;
 
-         /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/$this->DoUnpackaging(); return;
-        echo $this->pathToPackage;
+        if(file_exists($this->pathToPackage . '.zip'))
+        {
+            $this->DoUnpackaging();
+            return;
+        }
+
         $zip = new ZipArchive;
         if ($zip->open($this->pathToPackage . '.zip') === TRUE) {
             mkdir($this->pathToPackage);
             $zip->extractTo($this->pathToPackage);
             $zip->close();
-            echo 'ok';
             $this->DoUnpackaging();
         } else {
             echo 'failed';
@@ -105,7 +108,7 @@ class Unpackaging
 
         $search = ');';
 
-        $replace = 'cdFor' . $this->packageName . $search;
+        $replace = '$cdFor' . $this->packageName . $search;
 
         if(strpos($content, '(' . $search) !== false) {
             $content = str_replace($search, $replace, $content);
@@ -189,7 +192,7 @@ class Unpackaging
     {
         $pluginPath = realpath( $pathToFile );
         $pluginPath = str_replace( '\\', '/', $pluginPath );
-        $phpBotPath = str_replace( '/Plugins/PaketManager/Magic5AM', '', $pluginPath );
+        $phpBotPath = str_replace( '/Plugins/PaketManager/' . $this->packageName, '', $pluginPath );
 
         //echo $pluginPath . PHP_EOL . '<br>' . $phpBotPath . PHP_EOL . '<br><br>';
 
@@ -222,8 +225,6 @@ class Unpackaging
 
         $starterContent = str_replace($search, $replace, $starterContent);
 
-        echo 'ok' . $starterContent;
-
         file_put_contents($pathToStarter, $starterContent);
     }
 
@@ -234,20 +235,27 @@ class Unpackaging
 
         $this->AssignType();
 
-        $this->MakeMenu();
+        if($this->typeOfPackage == TypeOfPackage::Command)
+        {
+            $this->MakeMenu();
 
-        $this->IncludeMenu();
+            $this->IncludeMenu();
 
-        $this->MakeCommand();
+            $this->MakeCommand();
 
-        $this->IncludeCommand();
+            $this->IncludeCommand();
 
-        $this->MergeCommand();
+            $this->MergeCommand();
+        }
+        else
+        {
 
-        $this->MergePhrase();
+        }
 
         $this->MakeDeleteFile();
+
+        echo 'Done!';
     }
 }
 
-new Unpackaging('Magic5AM');
+new Unpackaging('Sheets');

@@ -45,4 +45,4 @@ class Packaging
     }
 }
 
-new Packaging(ABSPATH . 'Plugins/Magic5AM');
+new Packaging(ABSPATH . 'Plugins/Sheets');

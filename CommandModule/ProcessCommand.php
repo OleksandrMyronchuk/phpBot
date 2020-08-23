@@ -9,11 +9,11 @@ require_once ABSPATH . 'StructureModule/StructCommand.php';
 require_once ABSPATH . 'Resource/CommandPhraseModule.php';
 require_once ABSPATH . 'Defines.php';
 
-$commandDictionary = array_merge(cdForMagic5AM);
+$commandDictionary = array_merge($cdForMagic5AM);
 
 class ProcessCommand
 {
-    private $commandDictionary =
+    /*private $commandDictionary =
         [
             'start',
             'cancel',
@@ -23,7 +23,7 @@ class ProcessCommand
             'debug-ignore-time-off',
             'debug-ignore-duplicate-on',
             'debug-ignore-duplicate-off'
-        ];
+        ];*/
     private $type =
         [
             'private',
@@ -78,7 +78,15 @@ class ProcessCommand
 
         $resultCmd->command = $this->GetCommand($resultCmd->command);
 
-        switch ($resultCmd->command)
+        global $commandDictionary;
+        foreach ($commandDictionary as $cmd) {
+            if ($cmd == $resultCmd->command) {
+                $cmd = new Something($receivedMessage, $resultCmd, $resultCmd->command);
+                return $cmd->ExecuteCommand();
+            }
+        }
+
+        /*switch ($resultCmd->command)
         {
             case 'start':
                 $cmd = new CommandStart2($receivedMessage, $resultCmd, 'DeleteMessage');//make abstract
@@ -102,7 +110,7 @@ class ProcessCommand
                 return SetIgnoreDuplicate(1);
             case 'debug-ignore-duplicate-off':
                 return SetIgnoreDuplicate(0);
-        }
+        }*/
     }
 
     function GetCurrentCommand($user_id)
