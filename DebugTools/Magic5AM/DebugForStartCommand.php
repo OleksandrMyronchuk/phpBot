@@ -1,15 +1,17 @@
 <?php
 
+require_once ABSPATH . 'Resource/Magic5AM/Text/CommandPhraseModule.php';
+
 $allow_duplicate = null;
 $allow_incorrect_time = null;
 
 class DebugForStartCommand
 {
-    /*private $objCommandPhraseModule;*/
+    private $objCommandPhraseModule;
 
     public function __construct()
     {
-        /*$this->objCommandPhraseModule = new CommandPhraseModule('CommandDebug');*/
+        $this->objCommandPhraseModule = new CommandPhraseModule('CommandDebug');
     }
 
     function GetValues()

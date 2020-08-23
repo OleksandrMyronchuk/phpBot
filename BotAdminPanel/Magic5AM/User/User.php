@@ -11,7 +11,7 @@ if ( $_SERVER['REQUEST_METHOD']=='GET' &&
     die;
 }
 
-require_once __DIR__ . '/../Define.php';
+require_once __DIR__ . '/../../Define.php';
 require_once ABSPATH . 'BotAdminPanel/DBConnection.php';
 
 class User
@@ -19,7 +19,7 @@ class User
     public static function DeleteUser($userId)
     {
         global $db;
-        $cmd = file_get_contents(ABSPATH . 'Resource/MySQLCommands/DeleteUser.sql');
+        $cmd = file_get_contents(ABSPATH . 'Resource/Magic5AM/SQL/DeleteUser.sql');
 
         $pdoStatement = $db->pdo->prepare($cmd);
 

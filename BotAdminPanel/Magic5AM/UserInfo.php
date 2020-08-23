@@ -1,5 +1,5 @@
 <?php
-require_once 'Auth.php';
+require_once '../Auth.php';
 isLogged('login.html');
 
 require_once ABSPATH . 'Defines.php';
@@ -74,7 +74,7 @@ Show all users who forgot to accept members
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {}
         };
-        xhttp.open("POST", "User/User.php", true);
+        xhttp.open("POST", "Magic5AM/User/User.php", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         var dataToSend =
             "userId=" + userId;
@@ -90,7 +90,7 @@ Show all users who forgot to accept members
                 LoadTable(JSON.parse( this.responseText ));
             }
         };
-        xhttp.open("POST", "User/UserInfo.php", true);
+        xhttp.open("POST", "Magic5AM/User/UserInfo.php", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         var dataToSend =
             "beginDate=" + beginDate +

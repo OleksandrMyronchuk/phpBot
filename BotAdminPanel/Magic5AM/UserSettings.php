@@ -1,5 +1,5 @@
 <?php
-require_once 'Auth.php';
+require_once '../Auth.php';
 isLogged('login.html');
 ?>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.21/datatables.min.css"/>
@@ -7,6 +7,8 @@ isLogged('login.html');
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.21/datatables.min.js"></script>
 
 <script>
+
+    var pathToSource = "Magic5AM/User/UserSettings.php";
 
     function LoadTable(dataToExport) {
         var currentTable = $('#CurrentTable');
@@ -39,7 +41,7 @@ isLogged('login.html');
                 console.log("Day for the user with id " + userID + " has been updated to " + setDay );
             }
         };
-        xhttp.open("POST", "User/UserSettings.php", true);
+        xhttp.open("POST", pathToSource, true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         var data = "setDay=" + setDay + "&userID=" + userID;
         xhttp.send(data);
@@ -52,7 +54,7 @@ isLogged('login.html');
                 LoadTable(JSON.parse( this.responseText ));
             }
         };
-        xhttp.open("POST", "User/UserSettings.php", true);
+        xhttp.open("POST", pathToSource, true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send();
     })();

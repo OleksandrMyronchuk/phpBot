@@ -10,7 +10,7 @@ if ( $_SERVER['REQUEST_METHOD']=='GET' &&
     header( 'HTTP/1.0 403 Forbidden', TRUE, 403 );
     die;
 }
-require_once __DIR__ . '/../Define.php';
+require_once __DIR__ . '/../../Define.php';
 require_once ABSPATH . 'BotAdminPanel/DBConnection.php';
 
 class UserSettings
@@ -19,7 +19,7 @@ class UserSettings
     {
         global $db;
 
-        $cmd = file_get_contents(ABSPATH . 'Resource/MySQLCommands/GetListOfCurrentDays.sql');
+        $cmd = file_get_contents(ABSPATH . 'Resource/Magic5AM/SQL/GetListOfCurrentDays.sql');
 
         $pdoStatement = $db->pdo->prepare($cmd);
 
@@ -31,7 +31,7 @@ class UserSettings
     public static function SetDay($setDay, $userID)
     {
         global $db;
-        $cmd = file_get_contents(ABSPATH . 'Resource/MySQLCommands/SetDayForUser.sql');
+        $cmd = file_get_contents(ABSPATH . 'Resource/Magic5AM/SQL/SetDayForUser.sql');
 
         $pdoStatement = $db->pdo->prepare($cmd);
 

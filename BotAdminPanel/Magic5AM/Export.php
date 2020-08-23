@@ -1,6 +1,7 @@
 <?php
-require_once 'Auth.php';
+require_once '../Auth.php';
 isLogged('login.html');
+
 require_once ABSPATH . 'Defines.php';
 
 $timeOffsetBD = date(DATEFORMAT, strtotime('-' . abs(TIMEOFFSET - 24) . ' hours'));
@@ -67,7 +68,7 @@ $timeOffsetED = date(DATEFORMAT, strtotime('+' . TIMEOFFSET . ' hours'));
                 LoadTable(JSON.parse( this.responseText ));
             }
         };
-        xhttp.open("POST", "Export/View.php", true);
+        xhttp.open("POST", "Magic5AM/Export/View.php", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         var dataToSend =
             "beginDate=" + beginDate +
@@ -82,7 +83,7 @@ $timeOffsetED = date(DATEFORMAT, strtotime('+' . TIMEOFFSET . ' hours'));
         };
         var linkToWebSite =
             window.location.href;
-        linkToWebSite = linkToWebSite.replace("BotAdminPanel/Export.php", "Sheets/DeleteToken.php");
+        linkToWebSite = linkToWebSite.replace("BotAdminPanel/Magic5AM/Export.php", "Sheets/DeleteToken.php");
         xhttp.open("POST", linkToWebSite, true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send();
@@ -107,7 +108,7 @@ $timeOffsetED = date(DATEFORMAT, strtotime('+' . TIMEOFFSET . ' hours'));
                 document.body.removeChild(downloadLink);
             }
         };
-        xhttp.open("POST", "Export/ExcelReport.php", true);
+        xhttp.open("POST", "Magic5AM/Export/ExcelReport.php", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         var dataToSend =
             "beginDate=" + beginDate +
@@ -128,7 +129,7 @@ $timeOffsetED = date(DATEFORMAT, strtotime('+' . TIMEOFFSET . ' hours'));
             GoogleSheetsOutPut.innerHTML = this.responseText;
             }
         };
-        xhttp.open("POST", "Export/GoogleSheetsReport.php", true);
+        xhttp.open("POST", "Magic5AM/Export/GoogleSheetsReport.php", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         var dataToSend =
             "beginDate=" + beginDate +

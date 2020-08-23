@@ -50,11 +50,11 @@ if (!empty($_GET['my']) && $_GET['my']=='read2') {
     die;
 }
 */
-
+/*
 $update = json_decode('{"update_id":682546456,
 "message":{"message_id":1258,"from":{"id":669168176,"is_bot":false,"first_name":"Oleksandr","last_name":"Myronchuk","username":"OleksandrMyronchuk","language_code":"en"},"chat":{"id":669168176,"first_name":"Oleksandr","last_name":"Myronchuk","username":"OleksandrMyronchuk","type":"private"},"date":1598171837,'.
     '"text":"debug-status"}}', JSON_OBJECT_AS_ARRAY);
-
+*/
 /*
 $update = json_decode('{"update_id":682546384, "message":{"message_id":1155,"from":{"id":669168176,"is_bot":false,"first_name":"Oleksandr","last_name":"Myronchuk","username":"OleksandrMyronchuk","language_code":"en"},"chat":{"id":669168176,"first_name":"Oleksandr","last_name":"Myronchuk","username":"OleksandrMyronchuk","type":"private"},"date":1595457745,"text":"dfk"}}'
     , JSON_OBJECT_AS_ARRAY);
