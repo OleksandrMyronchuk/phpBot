@@ -34,7 +34,7 @@ class ProcessCommand
 
     function GetCommand($text)
     {
-        $text = strtolower($text);
+        $text = mb_strtolower($text);
 
         if('/' == $text[0])
         {
@@ -50,19 +50,19 @@ class ProcessCommand
 
     function ProcessCurrentCommand($receivedMessage)
     {
+        /* Якщо немає типу то не виконуватися, а сказати про помилку */
         if(!in_array($receivedMessage->type, $this->type)) {
-            return ((new Phrase('CommandAll'))->GetExceptionById(0));
+            return array('text' => (new Phrase('CommandAll'))->GetExceptionById(0));
         }
-
-        $resultCmd = '';
 
         $copyReceivedMessage = $this->GetCommand($receivedMessage->text);
         global $commandDictionary;
 
         foreach ($commandDictionary as $cmd) {
+
             if ($cmd['command'] == $copyReceivedMessage) {
                 $resultCmd = new StructCommand();
-                $resultCmd->command = $receivedMessage->text;
+                $resultCmd->command = $copyReceivedMessage;
                 $resultCmd->step = 0;
                 eval('$cmd = new ' . $cmd['className'] . '($receivedMessage, $resultCmd, $resultCmd->command);');
                 return $cmd->ExecuteCommand();
@@ -86,32 +86,6 @@ class ProcessCommand
                 return $cmd->ExecuteCommand();
             }
         }
-
-        /*switch ($resultCmd->command)
-        {
-            case 'start':
-                $cmd = new CommandStart2($receivedMessage, $resultCmd, 'DeleteMessage');//make abstract
-                return $cmd->ExecuteCommand();
-            case 'cancel':
-                $cmd = new CommandCancel($receivedMessage, $resultCmd);//make abstract
-                return $cmd->ExecuteCommand();
-            case 'time':
-                return "Server time is " . date(TIMEFORMAT, strtotime('+' . TIMEOFFSET . ' hours')) .
-                    "\nTelegram time is " . date(
-                        TIMEFORMAT,
-                        ($receivedMessage->date + (TIMEOFFSET * 3600))) .
-                    "\nTime offset is " . TIMEOFFSET;
-            case 'debug-status':
-                return GetStatue();
-            case 'debug-ignore-time-on':
-                return SetIgnoreTime(1);
-            case 'debug-ignore-time-off':
-                return SetIgnoreTime(0);
-            case 'debug-ignore-duplicate-on':
-                return SetIgnoreDuplicate(1);
-            case 'debug-ignore-duplicate-off':
-                return SetIgnoreDuplicate(0);
-        }*/
     }
 
     function GetCurrentCommand($user_id)

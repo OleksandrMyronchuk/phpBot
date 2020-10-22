@@ -4,8 +4,15 @@ isLogged('login.html');
 require_once 'Define.php';
 require_once ABSPATH . 'Logs/LogReader.php';
 
-if(!empty($_POST['fileName']))
+if(!empty($_POST['typeOfLog']))
 {
-    $fileName = $_POST['fileName'];
-    echo LogReader($fileName);
+    $typeOfLog = $_POST['typeOfLog'];
+    if($typeOfLog == 'input')
+    {
+        echo nl2br(LogReader('inputLog.xml'));
+    }
+    elseif ($typeOfLog == 'error')
+    {
+        echo nl2br(LogReader('log.xml'));
+    }
 }

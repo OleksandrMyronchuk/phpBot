@@ -61,8 +61,8 @@ require_once ABSPATH . 'BotAdminPanel/Magic5AM/Menu.php';
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="fa fa-align-left"></i>
                                     <span>Website Logs</span></a>
                                 <ul class="collapse">
-                                    <li><a href="#" onclick="LoadFrame(this, 'LogReader.php', 'Website Logs', 'fileName=inputLog.txt')">Input Messages</a></li>
-                                    <li><a href="#" onclick="LoadFrame(this, 'LogReader.php', 'Website Logs', 'fileName=log.txt')">Errors</a></li>
+                                    <li><a href="#" onclick="LoadFrame(this, 'LogReader.php', 'Website Logs', 'typeOfLog=input')">Input Messages</a></li>
+                                    <li><a href="#" onclick="LoadFrame(this, 'LogReader.php', 'Website Logs', 'typeOfLog=error')">Errors</a></li>
                                 </ul>
                             </li>
                             <li><a href="#"  onclick="LoadFrame(this, 'About.html', 'About', '', 'GET')"><i class="ti-map-alt"></i><span>About</span></a></li>

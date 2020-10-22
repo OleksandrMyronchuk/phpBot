@@ -25,12 +25,12 @@ require_once ABSPATH . 'DataBaseModule/Tables/SentMessage.php';
 $input = file_get_contents('php://input');
 $update = json_decode($input, JSON_OBJECT_AS_ARRAY);
 
-$inputLog = fopen('inputLog.txt', 'a');
+$inputLog = fopen('inputLog.xml', 'a');
 $logValue =
-    '<input>\n' .
-    '<time>\n' . date(TIMEFORMAT) . '\n</time>\n' .
-    '<value>\n' . $input . '\n</value>\n' .
-    '</input>\n\n';
+    '<input>' . PHP_EOL .
+    '<time>' . PHP_EOL . date(TIMEFORMAT)  . PHP_EOL . '</time>'  . PHP_EOL .
+    '<value>' . PHP_EOL . $input  . PHP_EOL . '</value>' . PHP_EOL .
+    '</input>' . PHP_EOL . PHP_EOL;
 fwrite($inputLog, $logValue);
 fclose($inputLog);
 
@@ -132,11 +132,11 @@ catch (Exception $e)
 {
     $error = $e->getMessage();
     $logValue =
-        '<input>\n' .
-        '<time>\n' . date(TIMEFORMAT) . '\n</time>\n' .
-        '<value>\n' . $error . '\n</value>\n' .
-        '</input>\n\n';
-    $logFile = fopen('log.txt', 'a') or die;
+        '<input>' . PHP_EOL .
+        '<time>' . PHP_EOL . date(TIMEFORMAT)  . PHP_EOL . '</time>' . PHP_EOL .
+        '<value>' . PHP_EOL . $error  . PHP_EOL . '</value>' . PHP_EOL .
+        '</input>' . PHP_EOL . PHP_EOL;
+    $logFile = fopen('log.xml', 'a') or die;
     fwrite($logFile, $logValue);
     fclose($logFile);
 }

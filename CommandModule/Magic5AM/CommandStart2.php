@@ -142,6 +142,7 @@ class CommandStart2 extends AbstractCommand
 
         //$this->DeleteStartCommand();
 
+
         return $this->objCommandPhraseModule->GetPhraseById($response);
     }
 
