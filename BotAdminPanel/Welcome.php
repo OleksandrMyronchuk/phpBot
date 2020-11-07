@@ -1,6 +1,8 @@
 <?php
+require_once 'Define.php';
 require_once 'Auth.php';
-isLogged('login.html');
+global $homepage;
+isLogged($homepage . 'BotAdminPanel/login.html');
 ?>
 <!DOCTYPE html>
 <html lang="en">

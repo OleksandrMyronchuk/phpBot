@@ -1,8 +1,49 @@
 <?php
+require_once ABSPATH . 'DataBaseModule/dbModule.php';
 
-
-class SentMessage
+class SentMessage extends dbModule
 {
+    public function __construct()
+    {
+        global $db;
+        if($db==null)
+        {
+            parent::__construct();
+            $this->ConnectToDB();
+            $db = $this;
+        }
+    }
+
+    function GetAllRecipientsByTextId($text_id)
+    {
+        global $db;
+
+        $CommandText = file_get_contents(ABSPATH . 'Resource/MySQLCommands/GetAllRecipientsByTextId.sql');
+
+        $pdoStatement = $db->pdo->prepare($CommandText);
+
+        $pdoStatement->bindParam(':_text_id', $text_id, PDO::PARAM_STR);
+
+        $pdoStatement->execute();
+
+        $result = $pdoStatement->fetchAll();
+
+        return $result;
+    }
+
+    function DeleteById($id)
+    {
+        global $db;
+
+        $CommandText = file_get_contents(ABSPATH . 'Resource/MySQLCommands/DeleteSentMessageById.sql');
+
+        $pdoStatement = $db->pdo->prepare($CommandText);
+
+        $pdoStatement->bindParam(':_id', $id, PDO::PARAM_STR);
+
+        $pdoStatement->execute();
+    }
+
     function DeleteCommandMessageInfo($userId)
     {
         global $db;

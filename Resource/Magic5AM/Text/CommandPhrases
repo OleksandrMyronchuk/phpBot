@@ -24,6 +24,18 @@
       "CommandAll": {
         "Phrases": [],
         "Exception": ["Бот может работать только в группе"]
+      },
+      "Greetings": {
+          "Phrases": [
+              "Привіт"
+          ],
+          "Exception": []
+      },
+      "Farewell": {
+          "Phrases": [
+              "Бувай"
+          ],
+          "Exception": []
       }
     }
 }

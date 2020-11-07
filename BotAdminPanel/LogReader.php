@@ -1,7 +1,8 @@
 <?php
-require_once 'Auth.php';
-isLogged('login.html');
 require_once 'Define.php';
+require_once 'Auth.php';
+global $homepage;
+isLogged($homepage . 'BotAdminPanel/login.html');
 require_once ABSPATH . 'Logs/LogReader.php';
 
 if(!empty($_POST['typeOfLog']))

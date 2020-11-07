@@ -46,10 +46,22 @@ class DBModule
         return $this->pdo->exec($cmd);
     }
 
+    function DeleteByUI($tableName, $uniqueKey, $value) //unique index
+    {
+        $cmd = "DELETE FROM $tableName WHERE $uniqueKey = :$uniqueKey";
+
+        $pdoStatement = $this->pdo->prepare($cmd);
+
+        $pdoStatement->bindParam(":$uniqueKey", $value, PDO::PARAM_STR);
+
+        $pdoStatement->execute();
+    }
+
     function Insert(
         $tableName,
         $fieldNames,
-        $fieldValues
+        $fieldValues,
+        $isIGNORE = true
     )
     {
         if (count ($fieldNames) != count ($fieldValues))
@@ -65,7 +77,9 @@ class DBModule
         $allFieldValues = ' ( :' . join(', :', $fieldNames) . ' ) ';
 
         $CommandText =
-            'INSERT INTO ' .
+            ($isIGNORE ?
+                'INSERT IGNORE INTO ' :
+                'INSERT INTO ') .
             $tableName .
             $allFieldNames .
             ' VALUES ' .

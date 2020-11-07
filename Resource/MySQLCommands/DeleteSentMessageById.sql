@@ -1,0 +1,1 @@
+DELETE FROM _SentMessage WHERE _id=:_id

@@ -21,6 +21,7 @@ require_once ABSPATH . 'CommandModule/ProcessCommand.php';
 require_once ABSPATH . 'StructureModule/StructReceivedMessage.php';
 require_once ABSPATH . 'StructureModule/StructSentMessage.php';
 require_once ABSPATH . 'DataBaseModule/Tables/SentMessage.php';
+require_once ABSPATH . 'DataBaseModule/Tables/ChatNames.php';
 
 $input = file_get_contents('php://input');
 $update = json_decode($input, JSON_OBJECT_AS_ARRAY);
@@ -126,6 +127,25 @@ try {
 
         $objTableSM = new SentMessage();
         $objTableSM->InsertMessage($objSM);
+
+        $chat = $answer['result']['chat'];
+        $chat_id = $chat['id'];
+        $chat_name = null;
+        if( array_key_exists ('title', $chat) )
+        {
+            $chat_name = '[C] ' . $chat['title'];//C - chat
+        }
+        elseif( array_key_exists ('username', $chat) )
+        {
+            $chat_name = $chat['username'] == '' ?
+                '[F/LN] ' . $chat['first_name'] . ' ' . $chat['last_name'] // First/LAst Name
+                :
+                '[U] ' . $chat['username']; // UserName
+        }
+
+
+        $objChatNames = new ChatNames();
+        $objChatNames->InsertChatName($chat_id, $chat_name);
     }
 }
 catch (Exception $e)

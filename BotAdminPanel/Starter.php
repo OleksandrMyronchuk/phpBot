@@ -1,6 +1,8 @@
-<?php
+﻿<?php
+require_once 'Define.php';
 require_once 'Auth.php';
-isLogged('login.html');
+global $homepage;
+isLogged($homepage . 'BotAdminPanel/login.html');
 ?>
 <!doctype html>
 <html class="no-js" lang="en">
@@ -63,6 +65,7 @@ require_once ABSPATH . 'BotAdminPanel/Magic5AM/Menu.php';
                                 <ul class="collapse">
                                     <li><a href="#" onclick="LoadFrame(this, 'LogReader.php', 'Website Logs', 'typeOfLog=input')">Input Messages</a></li>
                                     <li><a href="#" onclick="LoadFrame(this, 'LogReader.php', 'Website Logs', 'typeOfLog=error')">Errors</a></li>
+                                    <li><a href="#" onclick="LoadFrame(this, 'Cron/TaskManager.php', 'Website Logs')">Task</a></li>
                                 </ul>
                             </li>
                             <li><a href="#"  onclick="LoadFrame(this, 'About.html', 'About', '', 'GET')"><i class="ti-map-alt"></i><span>About</span></a></li>
@@ -136,6 +139,12 @@ require_once ABSPATH . 'BotAdminPanel/Magic5AM/Menu.php';
             s.innerText = scriptVal;
             document.body.appendChild( s );
         }
+        function addScriptSrc(src) {
+            var s = document.createElement( 'script' );
+            s.src = src;
+            s.type = 'text/javascript';
+            document.body.appendChild( s );
+        }
         var mainContentInner = document.getElementById('main-content-inner');
         var pageTitle = document.getElementById('page-title');
         var previousActiveTab = null;
@@ -156,7 +165,16 @@ require_once ABSPATH . 'BotAdminPanel/Magic5AM/Menu.php';
                     var htmlDoc = parser.parseFromString(this.responseText, 'text/html');
                     var scripts = htmlDoc.getElementsByTagName('script');
                     for(var i=0; i < scripts.length; i++) {
-                        addScript(scripts[i].innerText);
+                        if('src' in scripts[0] && scripts[i].src != '') {
+                            addScriptSrc(scripts[i].src);
+                        }
+                        else {
+                            addScript(scripts[i].innerText);
+                        }
+                    }
+                    var links = htmlDoc.getElementsByTagName('link');
+                    for(var i=0; i < links.length; i++) {
+                        document.getElementsByTagName("head")[0].appendChild(links[i]);
                     }
                     mainContentInner.innerHTML = '';
                     mainContentInner.appendChild(htmlDoc.getElementsByTagName('body')[0]);

@@ -1,0 +1,1 @@
+SELECT _time_of_last_execution FROM _AETaskLog WHERE _keyToAETask=:_keyToAETask;
