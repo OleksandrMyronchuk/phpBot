@@ -151,3 +151,15 @@ delete file -> краще робити на етапі створення арх
 +ДОРОБИТИ МАЙК КОМАНД ФУНКЦІЮ!!!!!!!!!!!!!!!!!!!!
 
 +видалити токен
+
+***
+
+<value>
+{"update_id":25856103,
+"message":{"message_id":77,"from":{"id":399967059,"is_bot":false,"first_name":"\u041a\u043e\u043b\u044f","last_name":"\u041c\u0435\u043b\u044c\u043d\u0438\u043a","username":"mykola_melnyk"},"chat":{"id":-391334846,"title":"delllllllllllllll","type":"group","all_members_are_administrators":true},"date":1604823598,"new_chat_participant":{"id":399967059,"is_bot":false,"first_name":"\u041a\u043e\u043b\u044f","last_name":"\u041c\u0435\u043b\u044c\u043d\u0438\u043a","username":"mykola_melnyk"},"new_chat_member":{"id":399967059,"is_bot":false,"first_name":"\u041a\u043e\u043b\u044f","last_name":"\u041c\u0435\u043b\u044c\u043d\u0438\u043a","username":"mykola_melnyk"},"new_chat_members":[{"id":399967059,"is_bot":false,"first_name":"\u041a\u043e\u043b\u044f","last_name":"\u041c\u0435\u043b\u044c\u043d\u0438\u043a","username":"mykola_melnyk"}]}}
+</value>
+
+Якщо є юзер-нейм то юн
+ні, то імя + прізвище
+
+Зробити якусь особливу обробку в ProcessCommand.php для new_chat_member

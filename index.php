@@ -91,61 +91,87 @@ try {
     $message = new StructReceivedMessage();
 
     if (null != $update) {
-        $message->chat_id = $update['message']['chat']['id'];
-        $message->type = $update['message']['chat']['type'];
-        $message->message_id = $update['message']['message_id'];
-        $message->first_name = $update['message']['from']['first_name'];
-        $message->last_name = $update['message']['from']['last_name'];
-        $message->username = $update['message']['from']['username'];
-        $message->user_id = $update['message']['from']['id'];
-        $message->date = $update['message']['date'];
-        $message->text = $update['message']['text'];//'start';
-        if($message->text == '') die;
-//echo $message->text;
-        $obj = new ProcessCommand();
+        $_message = $update['message'];
 
-        $answer = $obj->ProcessCurrentCommand($message);
-
-        if($answer == null)
+        if(array_key_exists('new_chat_member', $_message))
         {
-            die;
+            $username = null;
+            $chat_id = $_message['chat']['id'];
+            if($_message['new_chat_member']['username'] != '')
+            {
+                $username = $_message['new_chat_member']['username'];
+            }
+            else
+            {
+                $username = $_message['new_chat_member']['first_name'] . ' ' .
+                    $_message['new_chat_member']['last_name'];
+            }
+
+            $obj = new ProcessCommand();
+            $answer = $obj->NewUser($username);
+            $sendRequestResult = SendRequest(
+                'sendMessage',
+                [
+                    'chat_id' => $chat_id,
+                    'text' => $answer
+                ]);
+
+            $answer = json_decode(file_get_contents($sendRequestResult), JSON_OBJECT_AS_ARRAY);
         }
+        else {
 
-        $sendRequestResult = SendRequest(
-            'sendMessage',
-            [
-                'chat_id' => $message->chat_id,
-                'text' => $answer,
-                'reply_to_message_id' => $message->message_id
-            ]);
-        //echo '$answer = ' . $answer;
-        $answer = json_decode(file_get_contents($sendRequestResult), JSON_OBJECT_AS_ARRAY);
+            $message->chat_id = $_message['chat']['id'];
+            $message->type = $_message['chat']['type'];
+            $message->message_id = $_message['message_id'];
+            $message->first_name = $_message['from']['first_name'];
+            $message->last_name = $_message['from']['last_name'];
+            $message->username = $_message['from']['username'];
+            $message->user_id = $_message['from']['id'];
+            $message->date = $_message['date'];
+            $message->text = $_message['text'];//'start';
 
-        $objSM->message_id = $answer['result']['message_id'];
-        $objSM->chat_id = $answer['result']['chat']['id'];
-        $objSM->date = $answer['result']['date'];
+            if ($message->text == '') die;
+            //echo $message->text;
+            $obj = new ProcessCommand();
 
-        $objTableSM = new SentMessage();
-        $objTableSM->InsertMessage($objSM);
+            $answer = $obj->ProcessCurrentCommand($message);
 
-        $chat = $answer['result']['chat'];
-        $chat_id = $chat['id'];
-        $chat_name = null;
-        if( array_key_exists ('title', $chat) )
-        {
-            $chat_name = '[C] ' . $chat['title'];//C - chat
+            if ($answer == null) {
+                die;
+            }
+
+            $sendRequestResult = SendRequest(
+                'sendMessage',
+                [
+                    'chat_id' => $message->chat_id,
+                    'text' => $answer,
+                    'reply_to_message_id' => $message->message_id
+                ]);
+            //echo '$answer = ' . $answer;
+            $answer = json_decode(file_get_contents($sendRequestResult), JSON_OBJECT_AS_ARRAY);
+
+            $objSM->message_id = $answer['result']['message_id'];
+            $objSM->chat_id = $answer['result']['chat']['id'];
+            $objSM->date = $answer['result']['date'];
+
+            $objTableSM = new SentMessage();
+            $objTableSM->InsertMessage($objSM);
+
+            $chat = $answer['result']['chat'];
+            $chat_id = $chat['id'];
+            $chat_name = null;
+            if (array_key_exists('title', $chat)) {
+                $chat_name = '[C] ' . $chat['title'];//C - chat
+            } elseif (array_key_exists('username', $chat)) {
+                $chat_name = $chat['username'] == '' ?
+                    '[F/LN] ' . $chat['first_name'] . ' ' . $chat['last_name'] // First/LAst Name
+                    :
+                    '[U] ' . $chat['username']; // UserName
+            }
+
+            $objChatNames = new ChatNames();
+            $objChatNames->InsertChatName($chat_id, $chat_name);
         }
-        elseif( array_key_exists ('username', $chat) )
-        {
-            $chat_name = $chat['username'] == '' ?
-                '[F/LN] ' . $chat['first_name'] . ' ' . $chat['last_name'] // First/LAst Name
-                :
-                '[U] ' . $chat['username']; // UserName
-        }
-
-
-        $objChatNames = new ChatNames();
-        $objChatNames->InsertChatName($chat_id, $chat_name);
     }
 }
 catch (Exception $e)

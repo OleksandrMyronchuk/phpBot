@@ -40,20 +40,20 @@ $objTaskLog = new AETaskLog();
 
 $tasks = $objTask->GetAllAETasks();
 
-foreach ($tasks as $task) {
+foreach ($tasks as $task)
+{
     $execution_time = $task['_execution_time'];
 
-    if (time() >= strtotime($execution_time)) {
-        $id = $task['_id'];
-        $lastTimeOfExecution = $objTaskLog->GetTimeByKeyToTask($id);
+    $sec_execution_time = strtotime($execution_time);
 
-        if ((time() - $lastTimeOfExecution) <= DayInSecond) {
-            continue;
-        }
+    if (
+        (time() + 150) >= $sec_execution_time &&
+        (time() - 150) < $sec_execution_time
+    ) {
+        $id = $task['_id'];
         $action_name = $task['_action_name'];
         $char_id = $task['_chat_id'];
         $objAction = null;
-
         eval('$objAction = new ' . $action_name . '();');
         $ec = $objAction->ExecuteCommand();
 
@@ -75,7 +75,9 @@ foreach ($tasks as $task) {
                 $objTaskLog->InsertTaskLog($id, $currentTime);
             }
 
-        } catch (Exception $e) {
+        }
+        catch (Exception $e)
+        {
             echo $e->getMessage();
         }
     }

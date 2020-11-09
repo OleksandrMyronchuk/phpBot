@@ -5,6 +5,7 @@ require_once ABSPATH . 'CommandModule/Magic5AM/CommandDictionary.php';
 require_once ABSPATH . 'CommandModule/CommandCancel.php';
 require_once ABSPATH . 'DataBaseModule/Tables/ReceivedMessage.php';
 require_once ABSPATH . 'DebugTools/DebugForStartCommand.php';*/
+require_once ABSPATH . 'CommandModule/NewUser.php';
 require_once ABSPATH . 'StructureModule/StructCommand.php';
 require_once ABSPATH . 'Resource/Phrase.php';
 require_once ABSPATH . 'Defines.php';
@@ -86,11 +87,18 @@ class ProcessCommand
                 return $cmd->ExecuteCommand();
             }
         }
+        return null;
     }
 
     function GetCurrentCommand($user_id)
     {
         $obj = new ReceivedMessage();
         return $obj->GetLastMessageByUsername($user_id);
+    }
+
+    function NewUser($username)
+    {
+        $objNewUser = new NewUser($username);
+        return $objNewUser->ExecuteCommand();
     }
 }
