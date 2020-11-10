@@ -96,6 +96,12 @@ class ProcessCommand
         return $obj->GetLastMessageByUsername($user_id);
     }
 
+    function SetPhoto($objPhoto)
+    {
+        $objNewUser = new Photo($objPhoto);
+        return $objNewUser->ExecuteCommand();
+    }
+
     function NewUser($username)
     {
         $objNewUser = new NewUser($username);

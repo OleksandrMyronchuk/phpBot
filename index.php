@@ -118,6 +118,31 @@ try {
 
             $answer = json_decode(file_get_contents($sendRequestResult), JSON_OBJECT_AS_ARRAY);
         }
+        elseif (array_key_exists('photo', $_message))
+        {
+            $objPhoto = new StructPhoto();
+
+            $objPhoto->message_id = $_message['message_id'];
+            $objPhoto->first_name = $_message['from']['first_name'];
+            $objPhoto->last_name = $_message['from']['last_name'];
+            $objPhoto->username = $_message['from']['username'];
+            $objPhoto->user_id = $_message['from']['id'];
+            $objPhoto->date = $_message['date'];
+            $objPhoto->file_id = $_message['photo'][0]['file_id'];
+            $objPhoto->file_unique_id = $_message['photo'][0]['file_unique_id'];
+
+            $obj = new ProcessCommand();
+            $answer = $obj->SetPhoto($username);
+            $sendRequestResult = SendRequest(
+                'sendMessage',
+                [
+                    'chat_id' => $message->chat_id,
+                    'text' => $answer,
+                    'reply_to_message_id' => $message->message_id
+                ]);
+
+            $answer = json_decode(file_get_contents($sendRequestResult), JSON_OBJECT_AS_ARRAY);
+        }
         else {
 
             $message->chat_id = $_message['chat']['id'];
