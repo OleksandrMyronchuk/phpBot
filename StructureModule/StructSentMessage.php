@@ -1,14 +1,19 @@
 <?php
 
-class StructSentMessage
+class StructSentMessage extends StructCommand
 {
-    public $message_id;
-    public $chat_id;
-    public $date;
-    public $to_user_id;
-    public $text_id;
-    public $command;
-    public $step;
-}
+    private $objStructAbstractMessage;
 
-?>
+    public $text_id;
+    public $to_user_id;
+
+    public function __construct()
+    {
+        $this->objStructAbstractMessage = new StructAbstractMessage;
+    }
+
+    public function __call($method, $args)
+    {
+        $this->objStructAbstractMessage->$method($args[0]);
+    }
+}

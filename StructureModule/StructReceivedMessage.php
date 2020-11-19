@@ -1,15 +1,19 @@
 <?php
 
-
-class StructReceivedMessage
+class StructReceivedMessage extends StructUser
 {
-    public $message_id;
-    public $first_name;
-    public $last_name;
-    public $username;
-    public $user_id;
-    public $date;
+    private $objStructAbstractMessage;
+
     public $text;
     public $type;
-    public $chat_id;
+
+    public function __construct()
+    {
+        $this->objStructAbstractMessage = new StructAbstractMessage;
+    }
+
+        public function __call($method, $args)
+    {
+        $this->objStructAbstractMessage->$method($args[0]);
+    }
 }

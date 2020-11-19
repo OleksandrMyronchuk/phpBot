@@ -18,6 +18,9 @@ define ('base_url', 'https://api.telegram.org/bot' . token . '/');
 require_once ABSPATH . 'dbConnect.php';
 
 require_once ABSPATH . 'CommandModule/ProcessCommand.php';
+require_once ABSPATH . 'StructureModule/StructUser.php';
+require_once ABSPATH . 'StructureModule/Photo/StructReceivedMediaFile.php';
+require_once ABSPATH . 'StructureModule/StructAbstractMessage.php';
 require_once ABSPATH . 'StructureModule/StructReceivedMessage.php';
 require_once ABSPATH . 'StructureModule/StructSentMessage.php';
 require_once ABSPATH . 'DataBaseModule/Tables/SentMessage.php';
@@ -93,6 +96,11 @@ try {
     if (null != $update) {
         $_message = $update['message'];
 
+        $isVideo = array_key_exists('video', $_message);
+        $isVideoNote = array_key_exists('video_note', $_message);
+        $isPhoto = array_key_exists('photo', $_message);
+        $isMediaFile = $isVideo || $isVideoNote || $isPhoto;
+
         if(array_key_exists('new_chat_member', $_message))
         {
             $username = null;
@@ -118,21 +126,28 @@ try {
 
             $answer = json_decode(file_get_contents($sendRequestResult), JSON_OBJECT_AS_ARRAY);
         }
-        elseif (array_key_exists('photo', $_message))
+        elseif ($isMediaFile)
         {
-            $objPhoto = new StructPhoto();
+            $objSRMF = new StructReceivedMediaFile();
 
-            $objPhoto->message_id = $_message['message_id'];
-            $objPhoto->first_name = $_message['from']['first_name'];
-            $objPhoto->last_name = $_message['from']['last_name'];
-            $objPhoto->username = $_message['from']['username'];
-            $objPhoto->user_id = $_message['from']['id'];
-            $objPhoto->date = $_message['date'];
-            $objPhoto->file_id = $_message['photo'][0]['file_id'];
-            $objPhoto->file_unique_id = $_message['photo'][0]['file_unique_id'];
+            $mediaFileType = null;
+
+            $mediaFileType =
+                $isVideo ? 'video' :
+                $isVideoNote ? 'video_note' :
+                $isPhoto ? 'photo' : die;
+
+            $objSRMF->message_id = $_message['message_id'];
+            $objSRMF->first_name = $_message['from']['first_name'];
+            $objSRMF->last_name = $_message['from']['last_name'];
+            $objSRMF->username = $_message['from']['username'];
+            $objSRMF->user_id = $_message['from']['id'];
+            $objSRMF->date = $_message['date'];
+            $objSRMF->file_id = $_message['photo'][0]['file_id'];
+            $objSRMF->file_unique_id = $_message['photo'][0]['file_unique_id'];
 
             $obj = new ProcessCommand();
-            $answer = $obj->SetPhoto($username);
+            $answer = $obj->SetMediaFile($objSRMF);
             $sendRequestResult = SendRequest(
                 'sendMessage',
                 [

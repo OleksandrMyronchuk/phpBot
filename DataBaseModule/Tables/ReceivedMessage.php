@@ -37,9 +37,6 @@ class ReceivedMessage
         global $db;
         $names = [
             '_message_id',
-            '_first_name',
-            '_last_name',
-            '_username',
             '_from_id',
             '_date',
             '_text',
@@ -49,9 +46,6 @@ class ReceivedMessage
         ];
         $values = [
             $receivedMessage->message_id,
-            $receivedMessage->first_name,
-            $receivedMessage->last_name,
-            $receivedMessage->username,
             $receivedMessage->user_id,
             $receivedMessage->date,
             $receivedMessage->text,

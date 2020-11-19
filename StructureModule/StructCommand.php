@@ -1,6 +1,5 @@
 <?php
 
-
 class StructCommand
 {
     public $command;

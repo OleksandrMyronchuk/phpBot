@@ -1,13 +1,13 @@
 <?php
 
 
-class Photo
+class MediaFile
 {
-    private $objPhoto;
+    private $structReceivedMediaFile;
 
-    public function __construct($objPhoto)
+    public function __construct($structReceivedMediaFile)
     {
-        $this->objPhoto = $objPhoto;
+        $this->structReceivedMediaFile = $structReceivedMediaFile;
     }
 
     function ExecuteCommand()

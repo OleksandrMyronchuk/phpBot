@@ -96,10 +96,10 @@ class ProcessCommand
         return $obj->GetLastMessageByUsername($user_id);
     }
 
-    function SetPhoto($objPhoto)
+    function SetMediaFile($structReceivedMediaFile)
     {
-        $objNewUser = new Photo($objPhoto);
-        return $objNewUser->ExecuteCommand();
+        $objMediaFile = new MediaFile($structReceivedMediaFile);
+        return $objMediaFile->ExecuteCommand();
     }
 
     function NewUser($username)
