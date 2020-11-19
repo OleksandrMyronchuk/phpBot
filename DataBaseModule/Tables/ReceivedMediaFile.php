@@ -15,5 +15,7 @@ class ReceivedMediaFile extends dbModule
             $db = $this;
         }
     }
+
+    /*set get*/
 }
 

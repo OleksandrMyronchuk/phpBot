@@ -143,8 +143,8 @@ try {
             $objSRMF->username = $_message['from']['username'];
             $objSRMF->user_id = $_message['from']['id'];
             $objSRMF->date = $_message['date'];
-            $objSRMF->file_id = $_message['photo'][0]['file_id'];
-            $objSRMF->file_unique_id = $_message['photo'][0]['file_unique_id'];
+            $objSRMF->file_id = $_message[$mediaFileType][0]['file_id'];//!!!!!!!!!!!!!!!! Поміняти
+            $objSRMF->file_unique_id = $_message[$mediaFileType][0]['file_unique_id'];//!!!!!!!!!!!!!!!! Поміняти
 
             $obj = new ProcessCommand();
             $answer = $obj->SetMediaFile($objSRMF);

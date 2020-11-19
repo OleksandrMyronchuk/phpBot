@@ -12,7 +12,7 @@ class StructReceivedMessage extends StructUser
         $this->objStructAbstractMessage = new StructAbstractMessage;
     }
 
-        public function __call($method, $args)
+    public function __call($method, $args)
     {
         $this->objStructAbstractMessage->$method($args[0]);
     }
