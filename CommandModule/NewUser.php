@@ -15,5 +15,4 @@ class NewUser
         $objCommandPhraseModule = new CommandPhraseModule('NewUser');
         return sprintf($objCommandPhraseModule->GetPhraseById(0), $this->username);
     }
-
 }

@@ -17,6 +17,16 @@ class Web
         );
     }
 
+    public static function GetFile($file_id)
+    {
+        return Web::SendRequest(
+            'getFile',
+            [
+                'file_id' => $file_id
+            ]
+        );
+    }
+
     public static function SendRequest($method, $params = [])
     {
         $url = "";

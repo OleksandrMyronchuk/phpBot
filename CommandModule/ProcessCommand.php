@@ -9,6 +9,7 @@ require_once ABSPATH . 'CommandModule/NewUser.php';
 require_once ABSPATH . 'StructureModule/StructCommand.php';
 require_once ABSPATH . 'Resource/Phrase.php';
 require_once ABSPATH . 'Defines.php';
+require_once ABSPATH . 'CommandModule/MediaFile.php';
 
 $commandDictionary = array_merge($cdForMagic5AM);
 

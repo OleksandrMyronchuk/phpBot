@@ -135,7 +135,9 @@ try {
             $mediaFileType =
                 $isVideo ? 'video' :
                 $isVideoNote ? 'video_note' :
-                $isPhoto ? 'photo' : die;
+                $isPhoto ? 'photo' : 'die';
+
+            if($mediaFileType == 'die') die;
 
             $objSRMF->message_id = $_message['message_id'];
             $objSRMF->first_name = $_message['from']['first_name'];
@@ -147,7 +149,21 @@ try {
             $objSRMF->file_unique_id = $_message[$mediaFileType][0]['file_unique_id'];//!!!!!!!!!!!!!!!! Поміняти
 
             $obj = new ProcessCommand();
+
             $answer = $obj->SetMediaFile($objSRMF);
+
+            $message->chat_id = $_message['chat']['id'];
+            $message->type = $_message['chat']['type'];
+            $message->message_id = $_message['message_id'];
+            $message->first_name = $_message['from']['first_name'];
+            $message->last_name = $_message['from']['last_name'];
+            $message->username = $_message['from']['username'];
+            $message->user_id = $_message['from']['id'];
+            $message->date = $_message['date'];
+            $message->text = '00:00 ' . $answer;
+
+            $answer = $obj->ProcessCurrentCommand($message);
+
             $sendRequestResult = SendRequest(
                 'sendMessage',
                 [
@@ -201,7 +217,7 @@ try {
             $chat_id = $chat['id'];
             $chat_name = null;
             if (array_key_exists('title', $chat)) {
-                $chat_name = '[C] ' . $chat['title'];//C - chat
+                $chat_name = '[C] ' . $chat['title']; // C - chat
             } elseif (array_key_exists('username', $chat)) {
                 $chat_name = $chat['username'] == '' ?
                     '[F/LN] ' . $chat['first_name'] . ' ' . $chat['last_name'] // First/LAst Name
@@ -226,4 +242,3 @@ catch (Exception $e)
     fwrite($logFile, $logValue);
     fclose($logFile);
 }
-?>
